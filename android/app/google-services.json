@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "226892712585",
+    "project_id": "virtual-study-buddy-179e4",
+    "storage_bucket": "virtual-study-buddy-179e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226892712585:android:2cc5dc729e70560e73d458",
+        "android_client_info": {
+          "package_name": "com.example.virtual_study_buddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh40ShIOPeMkcBnaq9DMyWnAXt-hPk7eg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

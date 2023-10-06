@@ -3,6 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProfileView extends StatefulWidget {
+  final String userId;
+
+  ProfileView({required this.userId});
+
   @override
   _ProfileViewState createState() => _ProfileViewState();
 }
@@ -15,7 +19,7 @@ class _ProfileViewState extends State<ProfileView> {
     super.initState();
     _userDetails = FirebaseFirestore.instance
         .collection('Students')
-        .doc('user_document_id')
+        .doc(widget.userId) // Use the provided user ID
         .get();
   }
 

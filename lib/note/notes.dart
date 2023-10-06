@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:virtual_study_buddy/feed.dart';
+import 'package:virtual_study_buddy/dashboard/feed.dart';
 import 'package:virtual_study_buddy/home.dart';
 
-import 'colors.dart';
+import '../colors.dart';
 import 'note_details.dart';
 
 void main() {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:virtual_study_buddy/login.dart';
-import 'package:virtual_study_buddy/profilepage.dart';
-import 'package:virtual_study_buddy/readingbooks.dart';
+import 'package:virtual_study_buddy/auth/login.dart';
+import 'package:virtual_study_buddy/profile/profilepage.dart';
+import 'package:virtual_study_buddy/groups/readingbooks.dart';
 
-import 'colors.dart';
-import 'general/styleCard.dart';
+import '../colors.dart';
+import '../general/styleCard.dart';
 
 class ProfilePage extends StatelessWidget {
   @override

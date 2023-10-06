@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_study_buddy/colors.dart';
 
-import 'package:virtual_study_buddy/login.dart';
+import 'package:virtual_study_buddy/auth/login.dart';
 
 
 

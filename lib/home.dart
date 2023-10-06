@@ -1,11 +1,11 @@
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 
-import 'package:virtual_study_buddy/profile.dart';
+import 'package:virtual_study_buddy/profile/profile.dart';
 import 'colors.dart';
-import 'feed.dart';
-import 'groups.dart';
-import 'notes.dart';
+import 'dashboard/feed.dart';
+import 'groups/groups.dart';
+import 'note/notes.dart';
 
 class HomePage extends StatefulWidget {
   @override

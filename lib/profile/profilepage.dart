@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:virtual_study_buddy/profile.dart';
+import 'package:virtual_study_buddy/profile/profile.dart';
 
 class ProfileView extends StatefulWidget {
   @override

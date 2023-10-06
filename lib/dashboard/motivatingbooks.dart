@@ -3,24 +3,24 @@ import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:virtual_study_buddy/colors.dart';
 
-import 'home.dart';
+import '../home.dart';
 
-class Book {
+class MotivatingBook {
   String title;
   String link;
 
-  Book({
+  MotivatingBook({
     required this.title,
     required this.link,
   });
 }
 
-class ReadingBooks extends StatelessWidget {
+class MotivatingBooks extends StatelessWidget {
   // Hardcoded list of Book objects
-  final List<Book> books = [
-    Book(title: 'Python', link: 'https://wiki.python.org/moin/PythonBooks'),
-    Book(title: 'Learn DSA', link: 'https://www.geeksforgeeks.org/learn-data-structures-and-algorithms-dsa-tutorial/'),
-    Book(title: 'Learn OS', link: 'https://www.geeksforgeeks.org/operating-systems/')
+  final List<MotivatingBook> books = [
+    MotivatingBook(title: 'Think and Grow Rich', link: 'https://wiki.python.org/moin/PythonBooks'),
+    MotivatingBook(title: 'The Power Of Positive Thinking', link: 'https://www.geeksforgeeks.org/learn-data-structures-and-algorithms-dsa-tutorial/'),
+    MotivatingBook(title: 'The Four Agreements', link: 'https://www.geeksforgeeks.org/operating-systems/')
 
     // Add more books as needed
   ];
@@ -28,43 +28,45 @@ class ReadingBooks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
-      body: ListView.builder(
-        itemCount: books.length,
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primary), // Border color
-              borderRadius: BorderRadius.circular(10), // Border radius
-            ),
-            margin: EdgeInsets.all(10), // Margin around the container
-            child: ListTile(
-              title: Text(books[index].title),
-              onTap: () {
-                _launchURL(books[index].link); // Open the URL when ListTile is tapped
-              },
-            ),
-          );
-        },
-      )
+        appBar: appBar(),
+        body: ListView.builder(
+          itemCount: books.length,
+          itemBuilder: (context, index) {
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.primary), // Border color
+                borderRadius: BorderRadius.circular(10), // Border radius
+              ),
+              margin: EdgeInsets.all(10), // Margin around the container
+              child: ListTile(
+                title: Text(books[index].title),
+                onTap: () {
+                  _launchURL(books[index].link); // Open the URL when ListTile is tapped
+                },
+              ),
+            );
+          },
+        )
 
     );
   }
 
   // Function to launch URL in a web browser
+  // Function to launch URL in a web browser
   _launchURL(String url) async {
     try {
-      await launch('https://wiki.python.org/moin/PythonBooks');
+      await launch(url); // Launch the provided URL
     } catch (e) {
       print('Error launching URL: $e');
     }
-
   }
+
   AppBar appBar() {
     return AppBar(
       leading: GestureDetector(
         onTap: () {
-        //  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          //Navigator.push(
+          //context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Container(
           margin: const EdgeInsets.all(10),
@@ -82,7 +84,7 @@ class ReadingBooks extends StatelessWidget {
         ),
       ),
       title: const Text(
-        'Read and Learn',
+        'Best Sellers',
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:virtual_study_buddy/groups.dart';
+import 'package:virtual_study_buddy/groups/groups.dart';
 import 'package:virtual_study_buddy/home.dart';
 
-import 'colors.dart';
+import '../colors.dart';
 
 
 class QuestionnairePage extends StatefulWidget {

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_study_buddy/colors.dart';
-import 'package:virtual_study_buddy/pomodoro.dart';
-import 'package:virtual_study_buddy/readingbooks.dart';
-import 'package:virtual_study_buddy/studymusic.dart';
+import 'package:virtual_study_buddy/dashboard/pomodoro.dart';
+import 'package:virtual_study_buddy/groups/readingbooks.dart';
+import 'package:virtual_study_buddy/dashboard/studymusic.dart';
 
 
-import 'models/category_model.dart';
-import 'models/study_model.dart';
-import 'models/popular_model.dart';
+import '../models/category_model.dart';
+import '../models/study_model.dart';
+import '../models/popular_model.dart';
+import 'motivatingbooks.dart';
 
 class FeedPage extends StatelessWidget {
   FeedPage({super.key});
@@ -33,10 +34,7 @@ class FeedPage extends StatelessWidget {
         children: [
           _searchField(),
           const SizedBox(height: 40,),
-          _categoriesSection(),
-          const SizedBox(height: 40,),
-          _dietSection(),
-          const SizedBox(height: 40,),
+
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -94,7 +92,7 @@ class FeedPage extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => ReadingBooks()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => MotivatingBooks()));
                           },
                           child: SvgPicture.asset(
                             'assets/icons/button.svg',
@@ -317,6 +315,11 @@ class FeedPage extends StatelessWidget {
               ],
             ),
           ),
+          //const SizedBox(height: 40,),
+          const SizedBox(height: 40,),
+          _categoriesSection(),
+          const SizedBox(height: 40,),
+          _dietSection(),
           const SizedBox(height: 40,),
 
 

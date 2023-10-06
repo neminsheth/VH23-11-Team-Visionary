@@ -1,6 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_study_buddy/colors.dart';
+import 'package:virtual_study_buddy/home.dart';
 
 class PomodoroTimer extends StatefulWidget {
   @override
@@ -20,84 +23,149 @@ class _PomodoroTimerState extends State<PomodoroTimer> {
     super.dispose();
   }
 
+  AppBar appBar() {
+    return AppBar(
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        },
+        child: Container(
+          margin: const EdgeInsets.all(10),
+          alignment: Alignment.center,
+          width: 37,
+          child: SvgPicture.asset(
+            'assets/icons/Arrow - Left 2.svg',
+            height: 25,
+            width: 25,
+          ),
+          decoration: BoxDecoration(
+            color: const Color(0xffF7F8F8),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      title: const Text(
+        'Pomodoro!',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      centerTitle: true,
+      actions: [
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            alignment: Alignment.center,
+            width: 37,
+            child: SvgPicture.asset(
+              'assets/icons/dots.svg',
+              height: 5,
+              width: 5,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xffF7F8F8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          _formatDuration(_duration),
-          style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 20),
-        Text(
-          _message,
-          style: TextStyle(fontSize: 24, color: Colors.grey),
-        ),
-        SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {
-            if (_isRunning) {
-              stopTimer();
-            } else {
-              startTimer(_duration);
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            primary: _isRunning ? AppColors.primary : AppColors.secondary,
-            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          ),
-          child: Text(
-            _isRunning ? 'Stop' : 'Start',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-        SizedBox(height: 20),
-        Row(
+    return Scaffold(
+      // Wrap your widget in a Scaffold
+      appBar: appBar(),
+      body: Container(
+        color: AppColors.white,
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              _formatDuration(_duration),
+              style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            SizedBox(height: 20),
+            Text(
+              _message,
+              style: TextStyle(fontSize: 24, color: AppColors.black),
+            ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                startTimer(5 * 60);
+                if (_isRunning) {
+                  stopTimer();
+                } else {
+                  startTimer(_duration);
+                }
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                primary: _isRunning ? AppColors.primary : AppColors.secondary,
+                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               ),
               child: Text(
-                'Short Break',
-                style: TextStyle(fontSize: 16),
+                _isRunning ? 'Stop' : 'Start',
+                style: TextStyle(fontSize: 20, color: AppColors.white),
               ),
             ),
-            SizedBox(width: 20),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: () {
+                    startTimer(5 * 60);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: AppColors.primary,
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  child: Text(
+                    'Short Break',
+                    style: TextStyle(fontSize: 16, color: AppColors.white),
+                  ),
+                ),
+                SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    startTimer(15 * 60);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: AppColors.primary,
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  child: Text(
+                    'Long Break',
+                    style: TextStyle(fontSize: 16, color: AppColors.white),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                startTimer(15 * 60);
-              },
+              onPressed: resetTimer,
               style: ElevatedButton.styleFrom(
-                primary: Colors.purple,
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                primary: AppColors.secondary,
+                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               ),
               child: Text(
-                'Long Break',
-                style: TextStyle(fontSize: 16),
+                'Reset',
+                style: TextStyle(fontSize: 20, color: AppColors.white),
               ),
             ),
           ],
         ),
-        SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: resetTimer,
-          style: ElevatedButton.styleFrom(
-            primary: Colors.grey,
-            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          ),
-          child: Text(
-            'Reset',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-      ],
+      ),
     );
   }
 

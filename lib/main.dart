@@ -4,6 +4,8 @@ import 'package:virtual_study_buddy/level/group_a.dart';
 import 'package:virtual_study_buddy/auth/login.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:virtual_study_buddy/dashboard/pomodoro.dart';
+import 'package:virtual_study_buddy/level/group_b.dart';
+import 'package:virtual_study_buddy/level/group_i.dart';
 import 'firebase_options.dart';
 import 'home.dart';
 

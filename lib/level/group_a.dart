@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_study_buddy/colors.dart';
 import 'package:virtual_study_buddy/auth/login.dart';
+import 'dart:ui_web';
 
 class ChatScreenA extends StatefulWidget {
   @override
@@ -44,8 +45,27 @@ class _ChatScreenAState extends State<ChatScreenA> {
 
       // Add the new message to the collection
       await chatRoomMessageCollection.add(messageData);
+      
 
       _textController.clear();
+    }
+    getEmails();
+  }
+
+  void getEmails() async {
+    try {
+      List<String> emails = await getEmailsFromGroupChat();
+
+      if (emails.isNotEmpty) {
+        // Loop through the list of emails and display them
+        for (String email in emails) {
+          print('Sender Email in the chatroom: $email');
+        }
+      } else {
+        print('No sender emails found in the chatroom messages.');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
     }
   }
 
@@ -54,6 +74,7 @@ class _ChatScreenAState extends State<ChatScreenA> {
     await FirebaseAuth.instance.signOut();
     // Navigator.of(context).pop();
     //// Pop the chat screen and return to the previous screen
+    ///
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
@@ -64,6 +85,11 @@ class _ChatScreenAState extends State<ChatScreenA> {
       appBar: appBar(),
       body: Column(
         children: <Widget>[
+          FloatingActionButton(
+            onPressed: () => _showEmails(context), // Pass the context
+            tooltip: 'Show Emails',
+            child: Icon(Icons.email),
+          ),
           Expanded(
             child: StreamBuilder(
               stream: _firestore
@@ -203,3 +229,82 @@ class MessageWidget extends StatelessWidget {
     );
   }
 }
+
+Future<List<String>> getEmailsFromGroupChat() async {
+  final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      .collection('chatroom')
+      .doc('Advanced')
+      .collection('messages')
+      .get();
+
+  List<String> emailsList = [];
+
+  for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+    final senderEmail = doc['senderEmail'];
+    if (!emailsList.contains(senderEmail)) {
+      emailsList.add(senderEmail);
+    }
+  }
+
+  return emailsList;
+}
+
+void _showEmails(BuildContext context) async {
+  try {
+    List<String> emails = await getEmailsFromGroupChat();
+
+    if (emails.isNotEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Emails in the Group Chat'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: emails.map((email) {
+                return Text(email);
+              }).toList(),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      print('No sender emails found in the chatroom messages.');
+    }
+  } catch (e) {
+    print('An error occurred: $e');
+  }
+}
+
+Future<void> addUserToGroupChat(
+    String docId, String message, String senderEmail) async {
+  try {
+    final messageData = {
+      'message': message,
+      'senderEmail': senderEmail,
+      'timestamp': FieldValue.serverTimestamp(),
+    };
+
+    // Reference to the specified chat room's message collection
+    final chatRoomMessageCollection = FirebaseFirestore.instance
+        .collection('chatroom')
+        .doc(docId)
+        .collection('messages');
+
+    // Add the new message (user) to the collection
+    await chatRoomMessageCollection.add(messageData);
+    print('sucess');
+  } catch (e) {
+    print('An error occurred: $e');
+    // Handle any errors here
+  }
+}
+

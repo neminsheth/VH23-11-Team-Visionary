@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,17 +18,6 @@ class QuestionnairePage extends StatefulWidget {
 
 class _QuestionnairePageState extends State<QuestionnairePage> {
   int _currentQuestionIndex = 0;
-  String userEmail = "";
-  Future<void> loadUserGroups() async {
-    try {
-      // Replace 'user@example.com' with the actual user's email
-      userGroups = await getGroupsForUser(userEmail);
-      setState(() {}); // Update the UI with the retrieved groups
-    } catch (e) {
-      print('An error occurred: $e');
-    }
-  }
-
   final List<Map<String, dynamic>> _questions = [
     {
       'question': 'Do you enjoy studying in a group or individually?',
@@ -92,9 +80,9 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     },
   ];
   String? _selectedAnswer;
+  String userEmail = "";
 
   List<String?> selectedAnswers = [];
-  List<String> userGroups = [];
   Map<String, dynamic> responseData = {
     "predictions": [
       {
@@ -126,17 +114,15 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
 
         printPredictionResponse(responseData);
         // Get the highest label as a string
-
-        final user = FirebaseAuth.instance.currentUser;
-        // if(user != null) {
-        //   setState(() {
-        //     userEmail = user.email!;
-        //     print(userEmail);
-        //   }
-        //   );
-        // }
         String highestLabel = printHighestLabel(responseData);
-        addUserToGroupChat(highestLabel, 'Welcome to the chat!', userEmail);
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+      setState(() {
+        userEmail = user.email!;
+      });
+    }
+        addUserToGroupChat(highestLabel, '', userEmail);
+
         // Use the returned label as needed
         print(
             'Highest Label: $highestLabel'); // Output: Highest Label: Advanced
@@ -155,48 +141,44 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    _questions[_currentQuestionIndex]['question'],
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20),
-                  Column(
-                    children: _questions[_currentQuestionIndex]['options']
-                        .map<Widget>((option) => RadioListTile<String>(
-                              title: Text(option),
-                              value: option,
-                              groupValue: _selectedAnswer,
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _selectedAnswer = value;
-                                });
-                              },
-                            ))
-                        .toList(),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _selectedAnswer != null ? _nextQuestion : null,
-                    child: Text('Next'),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors
-                          .secondary, // Change this color to the color you desire
-                    ),
-                  ),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                _questions[_currentQuestionIndex]['question'],
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-            ),
+              SizedBox(height: 20),
+              Column(
+                children: _questions[_currentQuestionIndex]['options']
+                    .map<Widget>((option) => RadioListTile<String>(
+                          title: Text(option),
+                          value: option,
+                          groupValue: _selectedAnswer,
+                          onChanged: (String? value) {
+                            setState(() {
+                              _selectedAnswer = value;
+                            });
+                          },
+                        ))
+                    .toList(),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _selectedAnswer != null ? _nextQuestion : null,
+                child: Text('Next'),
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors
+                      .secondary, // Change this color to the color you desire
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -330,7 +312,6 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     }
   }
 }
-
 //{"predictions":[{"classes":["Advanced","Beginner","Intermediate"],"scores":[0.9919021129608154,0.001683753449469805,0.00641406886279583]}],
 //[No, No, Yes, NLP, Neutral, 4, 2, TextBook, 3, 1, Verbal, Enjoy Communicating, 8]
 //0.04733745008707047,0.0000817018881207332,0.9525808691978455

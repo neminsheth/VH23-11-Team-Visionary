@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_study_buddy/colors.dart';
 import 'package:virtual_study_buddy/auth/login.dart';
+import 'dart:ui_web';
 
 class ChatScreenI extends StatefulWidget {
   @override
@@ -47,6 +48,24 @@ class _ChatScreenIState extends State<ChatScreenI> {
 
       _textController.clear();
     }
+    getEmails();
+  }
+
+  void getEmails() async {
+    try {
+      List<String> emails = await getEmailsFromGroupChat();
+
+      if (emails.isNotEmpty) {
+        // Loop through the list of emails and display them
+        for (String email in emails) {
+          print('Sender Email in the chatroom: $email');
+        }
+      } else {
+        print('No sender emails found in the chatroom messages.');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+    }
   }
 
   // Function to log out the user
@@ -54,6 +73,7 @@ class _ChatScreenIState extends State<ChatScreenI> {
     await FirebaseAuth.instance.signOut();
     // Navigator.of(context).pop();
     //// Pop the chat screen and return to the previous screen
+    ///
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
@@ -64,6 +84,11 @@ class _ChatScreenIState extends State<ChatScreenI> {
       appBar: appBar(),
       body: Column(
         children: <Widget>[
+          FloatingActionButton(
+            onPressed: () => _showEmails(context), // Pass the context
+            tooltip: 'Show Emails',
+            child: Icon(Icons.email),
+          ),
           Expanded(
             child: StreamBuilder(
               stream: _firestore
@@ -202,38 +227,58 @@ class MessageWidget extends StatelessWidget {
       ),
     );
   }
+}
 
-  AppBar appBar() {
-    return AppBar(
-      title: const Text(
-        'Virtual Study buddy!',
-        style: TextStyle(
-            color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-      backgroundColor: Colors.white,
-      elevation: 0.0,
-      centerTitle: true,
-      leading: GestureDetector(
-        onTap: () {},
-      ),
-      actions: [
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            margin: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            width: 37,
-            child: SvgPicture.asset(
-              'assets/icons/dots.svg',
-              height: 5,
-              width: 5,
+Future<List<String>> getEmailsFromGroupChat() async {
+  final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      .collection('chatroom')
+      .doc('Intermediate')
+      .collection('messages')
+      .get();
+
+  List<String> emailsList = [];
+
+  for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+    final senderEmail = doc['senderEmail'];
+    if (!emailsList.contains(senderEmail)) {
+      emailsList.add(senderEmail);
+    }
+  }
+
+  return emailsList;
+}
+
+void _showEmails(BuildContext context) async {
+  try {
+    List<String> emails = await getEmailsFromGroupChat();
+
+    if (emails.isNotEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Emails in the Group Chat'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: emails.map((email) {
+                return Text(email);
+              }).toList(),
             ),
-            decoration: BoxDecoration(
-                color: const Color(0xffF7F8F8),
-                borderRadius: BorderRadius.circular(10)),
-          ),
-        ),
-      ],
-    );
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      print('No sender emails found in the chatroom messages.');
+    }
+  } catch (e) {
+    print('An error occurred: $e');
   }
 }

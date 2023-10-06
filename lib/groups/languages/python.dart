@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/svg.dart';
+
 
 class PythonQuizPage extends StatefulWidget {
   @override
@@ -8,6 +12,8 @@ class PythonQuizPage extends StatefulWidget {
 class _PythonQuizPageState extends State<PythonQuizPage> {
   int _currentQuestionIndex = 0;
   List<String> _selectedOptions = [];
+  int _score = 0;
+
 
   List<Map<String, dynamic>> _questions = [
     {
@@ -62,6 +68,7 @@ class _PythonQuizPageState extends State<PythonQuizPage> {
     },
   ];
 
+
   void _nextQuestion() {
     setState(() {
       if (_currentQuestionIndex < _questions.length - 1) {
@@ -69,11 +76,62 @@ class _PythonQuizPageState extends State<PythonQuizPage> {
         _selectedOptions.add('');
       } else {
         // User has completed the quiz
-        // Calculate score or navigate to the next page
-        print('Selected Options: $_selectedOptions');
+        // Calculate score
+        _calculateScore();
+        // Show the score in a dialog
+        _showScoreDialog();
       }
     });
   }
+
+  void _calculateScore() {
+    _score = 0;
+    for (int i = 0; i < _questions.length; i++) {
+      String selectedOption = _selectedOptions[i];
+      String correctAnswer = _questions[i]['correctAnswer'];
+
+      // Extract the prefix letter from the selected option
+      String selectedPrefix = selectedOption.substring(0, 1);
+
+      if (selectedPrefix == correctAnswer) {
+        _score++;
+      }
+    }
+  }
+
+
+  void _showScoreDialog() async {
+    // Get the current user ID (assuming the user is logged in)
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    // Reference to the "Students" collection in Firestore
+    CollectionReference students = FirebaseFirestore.instance.collection('Students');
+
+    // Save Python quiz score to Firestore
+    await students.doc(userId).set({
+      'python': _score,
+    }, SetOptions(merge: true)); // Merge the data if the document already exists
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Quiz Completed'),
+          content: Text('Your Score: $_score out of ${_questions.length}'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 
   @override
   void initState() {
@@ -84,9 +142,7 @@ class _PythonQuizPageState extends State<PythonQuizPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Python Quiz'),
-      ),
+      appBar: appBar(context),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -124,6 +180,40 @@ class _PythonQuizPageState extends State<PythonQuizPage> {
           ],
         ),
       ),
+    );
+  }
+  AppBar appBar(BuildContext context) {
+    return AppBar(
+      title: const Text(
+        'Python Quiz',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      centerTitle: true,
+      actions: [
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            alignment: Alignment.center,
+            width: 37,
+            child: SvgPicture.asset(
+              'assets/icons/dots.svg',
+              height: 5,
+              width: 5,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xffF7F8F8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

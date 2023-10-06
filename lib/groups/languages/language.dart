@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'cloud.dart';
 import 'dbms.dart';
 import 'htmlandcss.dart';
 import 'javascript.dart';

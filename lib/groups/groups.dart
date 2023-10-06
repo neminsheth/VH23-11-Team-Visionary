@@ -159,6 +159,7 @@ class _GroupPageState extends State<GroupPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          SizedBox(height: 20,),
           Expanded(
             child: ListView.builder(
               itemCount: userGroups.length,

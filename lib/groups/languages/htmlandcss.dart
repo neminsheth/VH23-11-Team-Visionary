@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HtmlCssQuizPage extends StatefulWidget {
   @override
@@ -8,6 +11,7 @@ class HtmlCssQuizPage extends StatefulWidget {
 class _HtmlCssQuizPageState extends State<HtmlCssQuizPage> {
   int _currentQuestionIndex = 0;
   List<String> _selectedAnswers = [];
+  int _score = 0;
 
   List<Map<String, dynamic>> _questions = [
     {
@@ -69,11 +73,60 @@ class _HtmlCssQuizPageState extends State<HtmlCssQuizPage> {
         _selectedAnswers.add('');
       } else {
         // User has completed the quiz
-        // Calculate score or navigate to the next page
-        print('Selected Answers: $_selectedAnswers');
+        // Calculate score
+        _calculateScore();
+        // Show the score in a dialog
+        _showScoreDialog();
       }
     });
   }
+
+  void _calculateScore() {
+    _score = 0;
+    for (int i = 0; i < _questions.length; i++) {
+      String selectedOption = _selectedAnswers[i];
+      String correctAnswer = _questions[i]['correctAnswer'];
+
+      // Extract the prefix letter from the selected option
+      String selectedPrefix = selectedOption.substring(0, 2);
+
+      if (selectedPrefix == correctAnswer.substring(0, 2)) {
+        _score++;
+      }
+    }
+  }
+
+  void _showScoreDialog() async {
+    // Get the current user ID (assuming the user is logged in)
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    // Reference to the "Students" collection in Firestore
+    CollectionReference students = FirebaseFirestore.instance.collection('Students');
+
+    // Save HTML and CSS quiz score to Firestore
+    await students.doc(userId).set({
+      'htmlCss': _score,
+    }, SetOptions(merge: true)); // Merge the data if the document already exists
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Quiz Completed'),
+          content: Text('Your Score: $_score out of ${_questions.length}'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   void initState() {
@@ -84,9 +137,7 @@ class _HtmlCssQuizPageState extends State<HtmlCssQuizPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('HTML and CSS Quiz'),
-      ),
+      appBar: appBar(context),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -99,7 +150,6 @@ class _HtmlCssQuizPageState extends State<HtmlCssQuizPage> {
             SizedBox(height: 20),
             Column(
               children: (_questions[_currentQuestionIndex]['options'] as List<String>).map<Widget>((option) {
-                int index = (_questions[_currentQuestionIndex]['options'] as List<String>).indexOf(option);
                 return RadioListTile<String>(
                   title: Text(option),
                   value: option,
@@ -126,4 +176,39 @@ class _HtmlCssQuizPageState extends State<HtmlCssQuizPage> {
       ),
     );
   }
+  AppBar appBar(BuildContext context) {
+    return AppBar(
+      title: const Text(
+        'Html and CSS Quiz',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      centerTitle: true,
+      actions: [
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            alignment: Alignment.center,
+            width: 37,
+            child: SvgPicture.asset(
+              'assets/icons/dots.svg',
+              height: 5,
+              width: 5,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xffF7F8F8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
+

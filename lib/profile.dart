@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_study_buddy/login.dart';
 import 'package:virtual_study_buddy/profilepage.dart';
+import 'package:virtual_study_buddy/readingbooks.dart';
 
 import 'colors.dart';
 import 'general/styleCard.dart';
@@ -100,6 +101,7 @@ class ProfilePage extends StatelessWidget {
               title: "Notification",
               img: "assets/icons/notfication.svg",
               onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ReadingBooks()));
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,

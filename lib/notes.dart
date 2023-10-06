@@ -30,13 +30,15 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<void> _signInWithEmailAndPassword(String email, String password) async {
+  Future<void> _signInWithEmailAndPassword(
+      String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Navigator.push(context, MaterialPageRoute(builder: (context) => NotesScreen()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => NotesScreen()));
     } catch (e) {
       print("Error: $e");
     }
@@ -80,7 +82,8 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 10.0),
               TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()));
                 },
                 child: Text('Click here to sign up'),
               ),
@@ -156,7 +159,8 @@ class _RegisterPageState extends State<RegisterPage> {
           'email': email,
         });
 
-        Navigator.push(context, MaterialPageRoute(builder: (context) => NotesScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => NotesScreen()));
       } else {
         print('User not registered');
       }
@@ -195,7 +199,7 @@ class _NotesScreenState extends State<NotesScreen> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               Map<String, dynamic> data =
-              snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
 
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -229,7 +233,8 @@ class _NotesScreenState extends State<NotesScreen> {
                         title: Text(
                           data['topic'],
                           style: TextStyle(
-                              color: AppColors.primary, fontWeight: FontWeight.bold),
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold),
                         ),
                         subtitle: Padding(
                           padding: const EdgeInsets.only(top: 8.0),
@@ -256,6 +261,7 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
     );
   }
+
   Future<void> _showNoteDialog(BuildContext context) async {
     return showDialog(
       context: context,
@@ -278,7 +284,7 @@ class _NotesScreenState extends State<NotesScreen> {
                   decoration: InputDecoration(labelText: 'Description'),
                 ),
                 TextField(
-                  maxLines: 15,
+                  maxLines: 5,
                   controller: _noteController,
                   decoration: InputDecoration(labelText: 'Note'),
                 ),
@@ -289,7 +295,8 @@ class _NotesScreenState extends State<NotesScreen> {
             ElevatedButton(
               child: Text('Cancel'),
               style: ElevatedButton.styleFrom(
-                primary: AppColors.primary, // Change this color to the color you desire
+                primary: AppColors
+                    .primary, // Change this color to the color you desire
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -298,7 +305,8 @@ class _NotesScreenState extends State<NotesScreen> {
             ElevatedButton(
               child: Text('Save'),
               style: ElevatedButton.styleFrom(
-                primary: AppColors.secondary, // Change this color to the color you desire
+                primary: AppColors
+                    .secondary, // Change this color to the color you desire
               ),
               onPressed: () async {
                 User? user = FirebaseAuth.instance.currentUser;
@@ -326,7 +334,8 @@ class _NotesScreenState extends State<NotesScreen> {
     return AppBar(
       leading: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Container(
           margin: const EdgeInsets.all(10),
@@ -376,4 +385,3 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 }
-

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:virtual_study_buddy/groups.dart';
+import 'package:virtual_study_buddy/home.dart';
 
 import 'colors.dart';
 
@@ -133,7 +134,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     return AppBar(
       leading: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => GroupPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Container(
           margin: const EdgeInsets.all(10),

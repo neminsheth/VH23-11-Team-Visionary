@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:virtual_study_buddy/colors.dart';
 
 
 import 'models/category_model.dart';
@@ -224,66 +225,182 @@ class FeedPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.only(left:20),
+          padding: EdgeInsets.only(left: 20),
           child: Text(
             'Category',
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
-                fontWeight: FontWeight.w600
-            ),
+                fontWeight: FontWeight.w600),
           ),
         ),
         const SizedBox(height: 15,),
-        Container(
-          height: 150,
-          child: ListView.separated(
-            itemCount: categories.length,
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(
-                left: 20,
-                right: 20
-            ),
-            separatorBuilder: (context, index) => const SizedBox(width: 25,),
-            itemBuilder: (context, index) {
-              return Container(
-                width: 120,
-                decoration: BoxDecoration(
-                    color: categories[index].boxColor.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(16)
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: 90,
-                      height: 90,
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SvgPicture.asset(categories[index].iconPath),
-                      ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              Container(
+                height: 150,
+                       child: GestureDetector(
+                        onTap: () {
+                        },
+                        child: Container(
+                          width: 120,
+                          decoration: BoxDecoration(
+                              color: AppColors.secondaryLight,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: 90,
+                                height: 90,
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SvgPicture.asset('assets/icons/happy.svg'),
+                                ),
+                              ),
+                              Text(
+                                'Happy',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontSize: 14),
+                              )
+                            ],
+                          ),
+                        ),
                     ),
-                    Text(
-                      categories[index].name,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                          fontSize: 14
-                      ),
-                    )
-                  ],
+              ),
+              SizedBox(width: 15,),
+              Container(
+                height: 150,
+
+                child: GestureDetector(
+                  onTap: () {
+
+                  },
+                  child: Container(
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 90,
+                          height: 90,
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset('assets/icons/stressed.svg'),
+                          ),
+                        ),
+                        Text(
+                          'Stressed',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: 14),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              );
-            },
+              ),
+              SizedBox(width: 15,),
+              Container(
+                height: 150,
+
+                child: GestureDetector(
+                  onTap: () {
+
+                  },
+                  child: Container(
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: AppColors.secondaryLight,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 90,
+                          height: 90,
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset('assets/icons/confused.svg'),
+                          ),
+                        ),
+                        Text(
+                          'Confused',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: 14),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 15,),
+              Container(
+                height: 150,
+
+                child: GestureDetector(
+                  onTap: () {
+
+                  },
+                  child: Container(
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 90,
+                          height: 90,
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset('assets/icons/tired.svg'),
+                          ),
+                        ),
+                        Text(
+                          'Tired',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: 14),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        )
+        ),
+
       ],
     );
   }
+
+}
 
   Container _searchField() {
     return Container(
@@ -302,7 +419,7 @@ class FeedPage extends StatelessWidget {
             filled: true,
             fillColor: Colors.white,
             contentPadding: const EdgeInsets.all(15),
-            hintText: 'Search Pancake',
+            hintText: 'Search Here',
             hintStyle: const TextStyle(
                 color: Color(0xffDDDADA),
                 fontSize: 14
@@ -355,9 +472,7 @@ class FeedPage extends StatelessWidget {
       centerTitle: true,
       leading: GestureDetector(
         onTap: () {
-
         },
-
       ),
       actions: [
         GestureDetector(
@@ -380,4 +495,3 @@ class FeedPage extends StatelessWidget {
       ],
     );
   }
-}

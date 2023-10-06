@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:virtual_study_buddy/dashboard.dart';
 import 'package:virtual_study_buddy/login.dart';
+
+import 'colors.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -21,57 +23,72 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Register'),
-      ),
+      appBar: appBar(),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
-            TextField(
-              controller: _surnameController,
-              decoration: InputDecoration(labelText: 'Surname'),
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(labelText: 'Password'),
-            ),
-            SizedBox(height: 20),
-            DropdownSearch<String>.multiSelection(
-              items: ["DBMS", "DSA", "OS", 'CN'],
-              popupProps: PopupPropsMultiSelection.menu(
-                showSelectedItems: true,
-                disabledItemFn: (String s) => s.startsWith('I'),
+            Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20.0),
+                border: Border.all(color: AppColors.primary, width: 2.0),
               ),
-              onChanged: (values) {
-                setState(() {
-                  _selectedSubject =
-                      values.join(', '); // Store selected subjects as a comma-separated string
-                });
-              },
-              selectedItems:
-                  _selectedSubject.isNotEmpty ? [_selectedSubject] : [],
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final String name = _nameController.text.trim();
-                final String surname = _surnameController.text.trim();
-                final String email = _emailController.text.trim();
-                final String password = _passwordController.text.trim();
-                _registerUser(name, surname, email, password, _selectedSubject);
-              },
-              child: Text('Register'),
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    controller: _nameController,
+                    decoration: InputDecoration(labelText: 'Name'),
+                  ),
+                  TextField(
+                    controller: _surnameController,
+                    decoration: InputDecoration(labelText: 'Surname'),
+                  ),
+                  TextField(
+                    controller: _emailController,
+                    decoration: InputDecoration(labelText: 'Email'),
+                  ),
+                  TextField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(labelText: 'Password'),
+                  ),
+                  SizedBox(height: 20),
+                  DropdownSearch<String>.multiSelection(
+                    items: ["DBMS", "DSA", "OS", 'CN'],
+                    popupProps: PopupPropsMultiSelection.menu(
+                      showSelectedItems: true,
+                      disabledItemFn: (String s) => s.startsWith('I'),
+                    ),
+                    onChanged: (values) {
+                      setState(() {
+                        _selectedSubject = values.join(', ');
+                      });
+                    },
+                    selectedItems:
+                    _selectedSubject.isNotEmpty ? [_selectedSubject] : [],
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      final String name = _nameController.text.trim();
+                      final String surname = _surnameController.text.trim();
+                      final String email = _emailController.text.trim();
+                      final String password = _passwordController.text.trim();
+                      _registerUser(name, surname, email, password, _selectedSubject);
+                    },
+                    child: Text('Register'),
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -79,7 +96,8 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Future<void> _registerUser(String name, String surname, String email,
+
+Future<void> _registerUser(String name, String surname, String email,
       String password, String selectedSubject) async {
     try {
       // Step 1: Register the user with Firebase Authentication
@@ -101,11 +119,54 @@ class _RegisterPageState extends State<RegisterPage> {
         'subjects': selectedSubject,
       });
 
-      // Step 4: Redirect to the Dashboard upon successful registration
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
-    } catch (e) {
+        } catch (e) {
       print("Error: $e");
     }
+  }
+  AppBar appBar() {
+    return AppBar(
+      title: const Text(
+        'Sign up',
+        style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.bold
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      centerTitle: true,
+      leading: GestureDetector(
+        onTap: () {
+
+        },
+
+      ),
+      actions: [
+        GestureDetector(
+          onTap: () {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
+          }
+          ,
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            alignment: Alignment.center,
+            width: 37,
+            decoration: BoxDecoration(
+                color: const Color(0xffF7F8F8),
+                borderRadius: BorderRadius.circular(10)
+            ),
+            child: SvgPicture.asset(
+              'assets/icons/dots.svg',
+              height: 5,
+              width: 5,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

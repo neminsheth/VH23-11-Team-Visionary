@@ -1,45 +1,74 @@
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+import 'package:virtual_study_buddy/profile.dart';
+import 'colors.dart';
+import 'feed.dart';
+import 'notes.dart';
 
-class MyApp extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    FeedPage(),
+    NotesScreen(),
+    Page(),
+    ProfilePage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Home Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Study Buddy',
+      //     style: TextStyle(color: AppColors.primary),
+      //   ),
+      //   backgroundColor: AppColors.white,
+      //   elevation: 0,
+      // ),
+      body: _pages[_currentIndex],
+      bottomNavigationBar: FlashyTabBar( // Use FlashyTabBar
+        selectedIndex: _currentIndex,
+        showElevation: true,
+        onItemSelected: (index) => setState(() {
+          _currentIndex = index;
+        }),
+        backgroundColor: AppColors.secondary, // Set background color
+        items: [
+          FlashyTabBarItem(
+            icon: Icon(Icons.home, color: AppColors.white),
+            title: Text('Feed', style: TextStyle(color: AppColors.white)),
+            ),
+          FlashyTabBarItem(
+            icon: Icon(Icons.emoji_emotions, color: AppColors.white),
+            title: Text('Notes', style: TextStyle(color: AppColors.white)),
+          ),
+          FlashyTabBarItem(
+            icon: Icon(Icons.groups, color: AppColors.white),
+            title: Text('Community', style: TextStyle(color: AppColors.white)),
+          ),
+          FlashyTabBarItem(
+            icon: Icon(Icons.more_horiz, color: AppColors.white),
+            title: Text('More', style: TextStyle(color: AppColors.white)),
+          ),
+        ],
       ),
-      home: HomeScreen(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+
+class Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Screen'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Welcome to Home Screen!',
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Add your action here
-              },
-              child: Text('Press Me'),
-            ),
-          ],
-        ),
-      ),
+    return Center(
+      child: Text('Page 3 Content'),
     );
   }
 }

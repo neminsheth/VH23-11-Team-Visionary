@@ -26,17 +26,25 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: appBar(),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
+        child: Container(
+              decoration: BoxDecoration(
+              image: DecorationImage(
+              image: AssetImage('assets/icons/background.png'), // Replace with your background image asset
+              fit: BoxFit.cover,
+              ),
+              ),
+              child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
+                 SizedBox(height: 150),
+                   Container(
               padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20.0),
-                border: Border.all(color: AppColors.primary, width: 2.0),
+                border: Border.all(color: AppColors.white, width: 2.0),
               ),
-              child: Column(
+                    child: Column(
                 children: <Widget>[
                   TextField(
                     controller: _nameController,
@@ -92,7 +100,8 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ],
         ),
-      ),
+       ),
+      )
     );
   }
 

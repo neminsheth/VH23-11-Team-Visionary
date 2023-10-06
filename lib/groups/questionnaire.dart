@@ -22,9 +22,8 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   String userEmail = "";
   Future<void> loadUserGroups() async {
     try {
-      // Replace 'user@example.com' with the actual user's email
       userGroups = await getGroupsForUser(userEmail);
-      setState(() {}); // Update the UI with the retrieved groups
+      setState(() {});
     } catch (e) {
       print('An error occurred: $e');
     }
@@ -93,8 +92,8 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       {
         "classes": ["Advanced", "Beginner", "Intermediate"],
         "scores": [
-          0.9919021129608154,
           0.001683753449469805,
+          0.9919021129608154,
           0.00641406886279583
         ]
       }
@@ -122,13 +121,12 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         // Get the highest label as a string
 
         final user = FirebaseAuth.instance.currentUser;
-        // if(user != null) {
-        //   setState(() {
-        //     userEmail = user.email!;
-        //     print(userEmail);
-        //   }
-        //   );
-        // }
+        if (user != null) {
+          setState(() {
+            userEmail = user.email!;
+            print(userEmail);
+          });
+        }
         String highestLabel = printHighestLabel(responseData);
         addUserToGroupChat(highestLabel, 'Welcome to the chat!', userEmail);
         // Use the returned label as needed

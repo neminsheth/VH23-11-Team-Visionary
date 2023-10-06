@@ -250,8 +250,7 @@ class GroupChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // You can implement the group chat page here using the 'groupId'
-    // to retrieve the corresponding group's chat messages and display them.
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Group Chat: $groupId'), // Display the group name or ID
@@ -273,6 +272,7 @@ Future<List<String>> getGroupsForUser(String userEmailAddress) async {
 
     Set<String> groupIds = Set<String>();
 
+    // Iterate through the documents to find group IDs
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       // Extract the group ID from the document's reference
       String groupId = doc.reference.parent.parent!.id;

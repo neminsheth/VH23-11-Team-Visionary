@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_study_buddy/colors.dart';
+import 'package:virtual_study_buddy/pomodoro.dart';
+import 'package:virtual_study_buddy/readingbooks.dart';
 
 
 import 'models/category_model.dart';
@@ -34,93 +36,287 @@ class FeedPage extends StatelessWidget {
           const SizedBox(height: 40,),
           _dietSection(),
           const SizedBox(height: 40,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  'Popular',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    'Popular Exercises',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 15,),
-              ListView.separated(
-                itemCount: popularDiets.length,
-                shrinkWrap: true,
-                separatorBuilder: (context, index) => const SizedBox(height: 25,),
-                padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20
-                ),
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                        color: popularDiets[index].boxIsSelected ?
-                        Colors.white : Colors.transparent,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: popularDiets[index].boxIsSelected ? [
-                          BoxShadow(
-                              color: const Color(0xff1D1617).withOpacity(0.07),
-                              offset: const Offset(0, 10),
-                              blurRadius: 40,
-                              spreadRadius: 0
-                          )
-                        ] : []
-                    ),
-                    child: SingleChildScrollView(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SvgPicture.asset(
-                            popularDiets[index].iconPath,
-                            width: 85,
-                            height: 95,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                popularDiets[index].name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                    fontSize: 16
-                                ),
+                const SizedBox(height: 15,),
+                Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color:
+                    Colors.white ,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/reading.svg',
+                          width: 85,
+                          height: 95,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Reading Books',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize: 16
                               ),
-                              Text(
-                                popularDiets[index].level + ' | ' + popularDiets[index].duration + ' | ' + popularDiets[index].recommended,
-                                style: const TextStyle(
-                                    color: Color(0xff7B6F72),
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400
-                                ),
-                              ),
-                            ],
-                          ),
-                          GestureDetector(
-                            onTap: (){},
-                            child: SvgPicture.asset(
-                              'assets/icons/button.svg',
-                              width: 30,
-                              height: 30,
                             ),
-                          )
-                        ],
-                      ),
+                            Text(
+                              'Medium | 30 mins | Highly Effective',
+                              style: const TextStyle(
+                                  color: Color(0xff7B6F72),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ReadingBooks()));
+                          },
+                          child: SvgPicture.asset(
+                            'assets/icons/button.svg',
+                            width: 30,
+                            height: 30,
+                          ),
+                        )
+                      ],
                     ),
-                  );
-                },
-              )
-            ],
+                  ),
+                ),
+                const SizedBox(height: 15,),
+                Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color:
+                    Colors.white ,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/music.svg',
+                          width: 85,
+                          height: 95,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Listening Music',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize: 16
+                              ),
+                            ),
+                            Text(
+                              'Easy | 20 mins | Highly Effective',
+                              style: const TextStyle(
+                                  color: Color(0xff7B6F72),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: (){},
+                          child: SvgPicture.asset(
+                            'assets/icons/button.svg',
+                            width: 30,
+                            height: 30,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15,),
+                Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color:
+                    Colors.white ,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/journaling.svg',
+                          width: 85,
+                          height: 95,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Journalling',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize: 16
+                              ),
+                            ),
+                            Text(
+                              'Medium | 10 mins | Highly Effective',
+                              style: const TextStyle(
+                                  color: Color(0xff7B6F72),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: (){},
+                          child: SvgPicture.asset(
+                            'assets/icons/button.svg',
+                            width: 30,
+                            height: 30,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15,),
+                Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color:
+                    Colors.white ,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/meditation.svg',
+                          width: 85,
+                          height: 95,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Meditation',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize: 16
+                              ),
+                            ),
+                            Text(
+                              'Medium | 45 mins | Highly Effective',
+                              style: const TextStyle(
+                                  color: Color(0xff7B6F72),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: (){},
+                          child: SvgPicture.asset(
+                            'assets/icons/button.svg',
+                            width: 30,
+                            height: 30,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15,),
+                Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color:
+                    Colors.white ,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/pomodoro.svg',
+                          width: 85,
+                          height: 95,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Pomodoro Timer',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize: 16
+                              ),
+                            ),
+                            Text(
+                              'Easy | 60 mins | Highly Effective',
+                              style: const TextStyle(
+                                  color: Color(0xff7B6F72),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => PomodoroTimer()));
+                          },
+                          child: SvgPicture.asset(
+                            'assets/icons/button.svg',
+                            width: 30,
+                            height: 30,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 40,),
+
+
         ],
       ),
     );

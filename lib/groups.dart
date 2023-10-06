@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:virtual_study_buddy/questionnaire.dart';
+import 'colors.dart';
 import 'home.dart';
 
 
@@ -17,10 +18,14 @@ class GroupPage extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
                 onPressed: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionnairePage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionnairePage()));
                 },
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.primary, // Set the button color to AppColor.primary
+                ),
                 child: Text('Join new group', style: TextStyle(fontSize: 18)),
-              ),
+              )
+
             ),
             // Add more widgets or content here
           ],

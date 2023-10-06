@@ -101,7 +101,6 @@ class ProfilePage extends StatelessWidget {
               title: "Notification",
               img: "assets/icons/notfication.svg",
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ReadingBooks()));
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,

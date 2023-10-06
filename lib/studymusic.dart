@@ -5,22 +5,22 @@ import 'package:virtual_study_buddy/colors.dart';
 
 import 'home.dart';
 
-class Book {
+class Music {
   String title;
   String link;
 
-  Book({
+  Music({
     required this.title,
     required this.link,
   });
 }
 
-class ReadingBooks extends StatelessWidget {
+class studymusic extends StatelessWidget {
   // Hardcoded list of Book objects
-  final List<Book> books = [
-    Book(title: 'Python', link: 'https://wiki.python.org/moin/PythonBooks'),
-    Book(title: 'Learn DSA', link: 'https://www.geeksforgeeks.org/learn-data-structures-and-algorithms-dsa-tutorial/'),
-    Book(title: 'Learn OS', link: 'https://www.geeksforgeeks.org/operating-systems/')
+  final List<Music> books = [
+    Music(title: 'Study Music', link: 'https://youtu.be/jXZAbnn1kTU?si=evUMEDBgDs2HnuvG'),
+    Music(title: 'Deep Focus Music', link: 'https://www.youtube.com/live/HbX-BjwjaHM?si=9cMMR7sDuNho0kR8'),
+    Music(title: 'Relaxing Music', link: 'https://youtu.be/bP9gMpl1gyQ?si=mFNYN7DDIR98RhPo')
 
     // Add more books as needed
   ];
@@ -28,25 +28,25 @@ class ReadingBooks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
-      body: ListView.builder(
-        itemCount: books.length,
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primary), // Border color
-              borderRadius: BorderRadius.circular(10), // Border radius
-            ),
-            margin: EdgeInsets.all(10), // Margin around the container
-            child: ListTile(
-              title: Text(books[index].title),
-              onTap: () {
-                _launchURL(books[index].link); // Open the URL when ListTile is tapped
-              },
-            ),
-          );
-        },
-      )
+        appBar: appBar(),
+        body: ListView.builder(
+          itemCount: books.length,
+          itemBuilder: (context, index) {
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.primary), // Border color
+                borderRadius: BorderRadius.circular(10), // Border radius
+              ),
+              margin: EdgeInsets.all(10), // Margin around the container
+              child: ListTile(
+                title: Text(books[index].title),
+                onTap: () {
+                  _launchURL(books[index].link); // Open the URL when ListTile is tapped
+                },
+              ),
+            );
+          },
+        )
 
     );
   }
@@ -64,7 +64,7 @@ class ReadingBooks extends StatelessWidget {
     return AppBar(
       leading: GestureDetector(
         onTap: () {
-        //  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Container(
           margin: const EdgeInsets.all(10),
@@ -82,7 +82,7 @@ class ReadingBooks extends StatelessWidget {
         ),
       ),
       title: const Text(
-        'Read and Learn',
+        'Studying and Relaxing Music',
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,

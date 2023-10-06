@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_study_buddy/colors.dart';
 import 'package:virtual_study_buddy/pomodoro.dart';
 import 'package:virtual_study_buddy/readingbooks.dart';
+import 'package:virtual_study_buddy/studymusic.dart';
 
 
 import 'models/category_model.dart';
@@ -145,7 +146,9 @@ class FeedPage extends StatelessWidget {
                           ],
                         ),
                         GestureDetector(
-                          onTap: (){},
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => studymusic()));
+                          },
                           child: SvgPicture.asset(
                             'assets/icons/button.svg',
                             width: 30,
@@ -435,6 +438,7 @@ class FeedPage extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
+              SizedBox(width: 15,),
               Container(
                 height: 150,
                        child: GestureDetector(

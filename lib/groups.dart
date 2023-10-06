@@ -56,7 +56,7 @@ class GroupPage extends StatelessWidget {
       //   ),
       // ),
       title: const Text(
-        'Notes!',
+        'Groups :)',
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,

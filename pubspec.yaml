@@ -41,6 +41,7 @@ dependencies:
   path_provider: ^2.1.1
   share: ^2.0.4
   url_launcher: ^6.1.11
+  dio: ^5.3.3
 
 dev_dependencies:
   flutter_lints: ^2.0.0

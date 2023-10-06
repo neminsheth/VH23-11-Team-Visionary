@@ -36,59 +36,52 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       'options': ['Yes', 'No'],
     },
     {
-      'question':
-          'Is there a specific area within your chosen field that you are interested about?',
-      'options': ['Computer Vision', 'NLP', 'Deep Learning', 'Data Analysis'],
+      'question': 'Is there a specific area within your chosen field that you are interested about?',
+      'options': ['Computer Vision' , 'NLP', 'Deep Learning' , 'Data Analysis'],
     },
     {
-      'question':
-          'Are you open to exploring new resources recommended by your study group?',
+      'question': 'Are you open to exploring new resources recommended by your study group?',
       'options': ['Yes', 'No'],
     },
     {
       'question': 'Do you prefer to communicate with your study group',
-      'options': ['Neutral', 'Dislike', 'Enjoy Communicating'],
+      'options': ['Neutral' , 'Dislike', 'Enjoy Communicating'],
     },
     {
-      'question':
-          'How do you prefer to give and receive feedback within a study group?',
-      'options': ['Verbal', 'Written'],
+      'question': 'How do you prefer to give and receive feedback within a study group?',
+      'options': ['Verbal' , 'Written'],
     },
     {
-      'question':
-          'How interested are you on a scale of 1-10 in participating in any academic or extracurricular activities related to your field of study?',
-      'options': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      'question': 'How interested are you on a scale of 1-10 in participating in any academic or extracurricular activities related to your field of study?',
+      'options': ['1' , '2', '3', '4', '5','6','7','8','9','10'],
     },
     {
-      'question':
-          'How would you rate your ability to help others who are struggling with this subject?',
-      'options': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      'question': 'How would you rate your ability to help others who are struggling with this subject?',
+      'options': ['1' , '2', '3', '4', '5','6','7','8','9','10'],
     },
     {
       'question': 'How confident are you in your knowledge of Python?',
-      'options': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      'options': ['1' , '2', '3', '4', '5','6','7','8','9','10'],
     },
     {
-      'question':
-          'Have you taken any advanced courses or have specialized knowledge in any particular aspect of Python ?',
+      'question': 'Have you taken any advanced courses or have specialized knowledge in any particular aspect of Python ?',
       'options': ['Yes', 'No'],
     },
     {
-      'question': 'How do you feel about collaborative group projects?',
-      'options': ['Highly Collaborative,', 'Neutral', 'Independent'],
+    'question': 'How do you feel about collaborative group projects?',
+    'options': ['Highly Collaborative,' , 'Neutral', 'Independent'],
     },
     {
       'question': 'How many years have you been studying the subject?',
-      'options': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      'options': ['1' , '2', '3', '4', '5','6','7','8','9','10'],
     },
     {
-      'question': 'What types of study resources do you find most helpful?',
-      'options': ['TextBook', 'Study Group', 'Peer Discussion', 'Online'],
+    'question': 'What types of study resources do you find most helpful?',
+    'options': ['TextBook' , 'Study Group', 'Peer Discussion', 'Online'],
     },
     {
-      'question':
-          'How many hours per day are you comfortable dedicating to focused study?',
-      'options': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      'question': 'How many hours per day are you comfortable dedicating to focused study?',
+      'options': ['1' , '2', '3', '4', '5','6','7','8','9','10'],
     },
   ];
   String? _selectedAnswer;
@@ -109,6 +102,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   };
 
   // String highestLabel = getHighestLabel(responseData);
+
 
   void _nextQuestion() {
     setState(() {
@@ -155,49 +149,53 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    _questions[_currentQuestionIndex]['question'],
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20),
-                  Column(
-                    children: _questions[_currentQuestionIndex]['options']
-                        .map<Widget>((option) => RadioListTile<String>(
-                              title: Text(option),
-                              value: option,
-                              groupValue: _selectedAnswer,
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _selectedAnswer = value;
-                                });
-                              },
-                            ))
-                        .toList(),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _selectedAnswer != null ? _nextQuestion : null,
-                    child: Text('Next'),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors
-                          .secondary, // Change this color to the color you desire
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      _questions[_currentQuestionIndex]['question'],
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 20),
+                    Column(
+                      children: _questions[_currentQuestionIndex]['options']
+                          .map<Widget>((option) => RadioListTile<String>(
+                                title: Text(option),
+                                value: option,
+                                groupValue: _selectedAnswer,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _selectedAnswer = value;
+                                  });
+                                },
+                              ))
+                          .toList(),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _selectedAnswer != null ? _nextQuestion : null,
+                      child: Text('Next'),
+                      style: ElevatedButton.styleFrom(
+                        primary: AppColors
+                            .secondary, // Change this color to the color you desire
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+
     );
   }
 
@@ -205,8 +203,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     return AppBar(
       leading: GestureDetector(
         onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Container(
           margin: const EdgeInsets.all(10),
@@ -298,7 +295,6 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       print(e.response?.toString() ?? 'Error occurred');
     }
   }
-
   void printPredictionResponse(Map<String, dynamic> responseData) {
     List<String> classes = responseData['predictions'][0]['classes'];
     List<double> scores = responseData['predictions'][0]['scores'];

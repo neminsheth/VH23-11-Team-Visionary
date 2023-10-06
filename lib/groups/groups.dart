@@ -9,6 +9,7 @@ import 'package:virtual_study_buddy/level/group_b.dart';
 import 'package:virtual_study_buddy/level/group_i.dart';
 import '../colors.dart';
 import '../home.dart';
+import 'languages/language.dart';
 
 class GroupPage extends StatefulWidget {
   @override
@@ -136,6 +137,16 @@ class _GroupPageState extends State<GroupPage> {
                   primary: AppColors.primary,
                 ),
                 child: Text('Streaks', style: TextStyle(fontSize: 18)),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => LanguagePage()));
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.primary, // Set the button color to AppColor.primary
+                ),
+                child: Text('Language', style: TextStyle(fontSize: 18)),
               ),
             ],
           ),

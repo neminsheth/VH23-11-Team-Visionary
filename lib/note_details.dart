@@ -31,75 +31,83 @@ class NoteDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context),
-      body: Center(
-        child: Container(
-          height: 600,
-          width: 350,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                spreadRadius: 2,
-                blurRadius: 4,
-                offset: Offset(0, 2),
+      body: Column(
+        children: [
+          SizedBox(height: 30),
+          Center(
+            child: Container(
+              height: 600,
+              width: 350,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+                border: Border.all(
+                  color: AppColors.secondary, // Border color
+                  width: 4.0, // Border width
+                ),
               ),
-            ],
-            border: Border.all(
-              color: AppColors.secondary, // Border color
-              width: 4.0, // Border width
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Topic: $topic',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 30),
+                      Text(
+                        'Description: $description',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 50),
+                      Text(
+                        'Note: $note',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10),
+                      Text('Date: $date'),
+                      SizedBox(height: 50),
+                      // For delete button
+
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
-
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Topic: $topic',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          SizedBox(height: 30),
+              Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    _generateAndSharePDF(context);
+                  },
+                  icon: Icon(Icons.share),
+                  color: AppColors.primary,
+                  iconSize: 24.0, // You can adjust the icon size as needed
                 ),
-                SizedBox(height: 30),
-                Text(
-                  'Description: $description',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 50),
-                Text(
-                  'Note: $note',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                Text('Date: $date'),
-                SizedBox(height: 310),
-                // For delete button
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        _generateAndSharePDF(context);
-                      },
-                      icon: Icon(Icons.share),
-                      color: AppColors.primary,
-                      iconSize: 24.0, // You can adjust the icon size as needed
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        _deleteNote();
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.delete),
-                      color: AppColors.primary,
-                      iconSize: 24.0, // You can adjust the icon size as needed
-                    ),
-                  ],
+                IconButton(
+                  onPressed: () {
+                    _deleteNote();
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.delete),
+                  color: AppColors.primary,
+                  iconSize: 24.0, // You can adjust the icon size as needed
                 ),
               ],
             ),
-          ),
-        ),
+        ],
       ),
     );
   }

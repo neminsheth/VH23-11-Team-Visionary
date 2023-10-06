@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:virtual_study_buddy/profile.dart';
 import 'colors.dart';
 import 'feed.dart';
+import 'groups.dart';
 import 'notes.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     FeedPage(),
     NotesScreen(),
-    Page(),
+    GroupPage(),
     ProfilePage(),
   ];
 
@@ -51,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           ),
           FlashyTabBarItem(
             icon: Icon(Icons.groups, color: AppColors.white),
-            title: Text('Community', style: TextStyle(color: AppColors.white)),
+            title: Text('Groups', style: TextStyle(color: AppColors.white)),
           ),
           FlashyTabBarItem(
             icon: Icon(Icons.more_horiz, color: AppColors.white),
@@ -64,11 +65,11 @@ class _HomePageState extends State<HomePage> {
 }
 
 
-class Page extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Page 3 Content'),
-    );
-  }
-}
+// class Page extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: Text('Page 3 Content'),
+//     );
+//   }
+// }

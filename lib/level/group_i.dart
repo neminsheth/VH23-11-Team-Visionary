@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:virtual_study_buddy/colors.dart';
 import 'package:virtual_study_buddy/auth/login.dart';
 
@@ -25,6 +26,14 @@ class _ChatScreenIState extends State<ChatScreenI> {
       setState(() {
         userEmail = user.email!;
       });
+    }
+  }
+  void _launchGoogleMeet() async {
+    const url = 'https://meet.google.com/';
+    try {
+      await launch(url); // Launch the provided URL
+    } catch (e) {
+      print('Error launching URL: $e');
     }
   }
 
@@ -102,13 +111,12 @@ class _ChatScreenIState extends State<ChatScreenI> {
               ),
           SizedBox(width: 5),
 
-          FloatingActionButton(
-            backgroundColor: Colors.white,
-            onPressed: () => _showEmails(context), // Pass the context
-            tooltip: 'Video Call',
-            child: Icon(Icons.video_call_outlined,
-              color: Colors.black,),
-          ),
+              FloatingActionButton(
+                backgroundColor: Colors.white,
+                onPressed: _launchGoogleMeet, // Call the function when button is pressed
+                tooltip: 'Video Call',
+                child: Icon(Icons.video_call_outlined, color: Colors.black),
+              ),
             ],
           ),
 

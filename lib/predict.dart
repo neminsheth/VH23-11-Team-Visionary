@@ -12,6 +12,7 @@ class CareerPredictionPage extends StatefulWidget {
 
 class _CareerPredictionPageState extends State<CareerPredictionPage> {
   String prediction = '';
+  String imagePath = ''; // Empty path initially
 
   Future<void> predictCareerFromFirebase() async {
     // Retrieve data from the Firebase collection "Students"
@@ -31,8 +32,6 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
       htmlCssMarks += (student.data()!['htmlCss'] ?? 0) as int;
     }
 
-
-
     // Calculate average marks (assuming all students have the same weight)
     int totalStudents = studentsSnapshot.size;
     pythonMarks ~/= totalStudents;
@@ -43,6 +42,7 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
     // Predict career based on average marks
     setState(() {
       prediction = predictCareer(pythonMarks, javascriptMarks, dbmsMarks, htmlCssMarks);
+      imagePath = getImagePath(prediction); // Set image path based on prediction
     });
   }
 
@@ -65,6 +65,18 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
     }
   }
 
+  String getImagePath(String prediction) {
+    // Implement logic to return the appropriate image path based on the prediction
+    // For example:
+    if (prediction == 'Analyst') {
+      return 'assets/icons/analyst.png';
+    } else if (prediction == 'Software Developer') {
+      return 'assets/icons/software.png';
+    } else {
+      return 'assets/icons/cloud.png';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,15 +91,15 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
               width: 500,
               child: ElevatedButton(
                 onPressed: predictCareerFromFirebase,
-                child: Text('Predict Career from Firebase Data',
-                style: TextStyle(
-                  color: AppColors.black
-                ),),
+                child: Text(
+                  'Predict Career from Firebase Data',
+                  style: TextStyle(color: AppColors.black),
+                ),
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.secondary,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30), // Set button border radius
-                  ),// Set the button color to blue
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
               ),
             ),
@@ -96,11 +108,22 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
               'Predicted Career: $prediction',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            // Conditionally show the image after prediction is made
+            if (imagePath.isNotEmpty) ...[
+              SizedBox(height: 20),
+              Image.asset(
+                imagePath,
+                width: 200,
+                height: 200,
+                fit: BoxFit.contain,
+              ),
+            ],
           ],
         ),
       ),
     );
   }
+
   AppBar appBar() {
     return AppBar(
       leading: GestureDetector(

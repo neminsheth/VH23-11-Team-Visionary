@@ -96,6 +96,20 @@ class ProfilePage extends StatelessWidget {
               description: "Check out your profile!",
             ),
             SizedBox(
+              height: 15,
+            ),
+
+            StyleCard(
+              title: "Predict",
+              img: "assets/icons/profile.svg",
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CareerPredictionPage()));
+              },
+              bgColor: AppColors.primary,
+              textColor: AppColors.white,
+              description: "Check your road-map!",
+            ),
+            SizedBox(
               height: 5,
             ),
             StyleCard(

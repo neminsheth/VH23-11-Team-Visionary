@@ -202,7 +202,7 @@ class _NotesScreenState extends State<NotesScreen> {
                   snapshot.data!.docs[index].data() as Map<String, dynamic>;
 
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.all( 8.0),
                 child: Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(12),

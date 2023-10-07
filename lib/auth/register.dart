@@ -23,90 +23,95 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Container(
+        appBar: appBar(),
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Container(
               decoration: BoxDecoration(
-              image: DecorationImage(
-              image: AssetImage('assets/icons/background.png'), // Replace with your background image asset
-              fit: BoxFit.cover,
-              ),
+                image: DecorationImage(
+                  image: AssetImage(
+                      'assets/icons/background.png'), // Replace with your background image asset
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-                 SizedBox(height: 150),
-                   Container(
-              padding: EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.0),
-                border: Border.all(color: AppColors.white, width: 2.0),
-              ),
-                    child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  TextField(
-                    controller: _nameController,
-                    decoration: InputDecoration(labelText: 'Name'),
-                  ),
-                  TextField(
-                    controller: _surnameController,
-                    decoration: InputDecoration(labelText: 'Surname'),
-                  ),
-                  TextField(
-                    controller: _emailController,
-                    decoration: InputDecoration(labelText: 'Email'),
-                  ),
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(labelText: 'Password'),
-                  ),
-                  SizedBox(height: 20),
-                  DropdownSearch<String>.multiSelection(
-                    items: ["DBMS", "DSA", "OS", 'CN'],
-                    popupProps: PopupPropsMultiSelection.menu(
-                      showSelectedItems: true,
-                      disabledItemFn: (String s) => s.startsWith('I'),
+                  SizedBox(height: 150),
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                      border: Border.all(color: AppColors.white, width: 2.0),
                     ),
-                    onChanged: (values) {
-                      setState(() {
-                        _selectedSubject = values.join(', ');
-                      });
-                    },
-                    selectedItems:
-                    _selectedSubject.isNotEmpty ? [_selectedSubject] : [],
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      final String name = _nameController.text.trim();
-                      final String surname = _surnameController.text.trim();
-                      final String email = _emailController.text.trim();
-                      final String password = _passwordController.text.trim();
-                      _registerUser(name, surname, email, password, _selectedSubject);
-                    },
-                    child: Text('Register'),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
+                    child: Column(
+                      children: <Widget>[
+                        TextField(
+                          controller: _nameController,
+                          decoration: InputDecoration(labelText: 'Name'),
+                        ),
+                        TextField(
+                          controller: _surnameController,
+                          decoration: InputDecoration(labelText: 'Surname'),
+                        ),
+                        TextField(
+                          controller: _emailController,
+                          decoration: InputDecoration(labelText: 'Email'),
+                        ),
+                        TextField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(labelText: 'Password'),
+                        ),
+                        SizedBox(height: 20),
+                        // DropdownSearch<String>.multiSelection(
+                        //   items: ["DBMS", "HTML", "JS", 'PYTHON'],
+                        //   popupProps: PopupPropsMultiSelection.menu(
+                        //     showSelectedItems: true,
+                        //     disabledItemFn: (String s) => s.startsWith('I'),
+                        //   ),
+                        //   onChanged: (values) {
+                        //     setState(() {
+                        //       _selectedSubject = values.join(', ');
+                        //     });
+                        //   },
+                        //   selectedItems:
+                        //   _selectedSubject.isNotEmpty ? [_selectedSubject] : [],
+                        // ),
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            final String name = _nameController.text.trim();
+                            final String surname =
+                                _surnameController.text.trim();
+                            final String email = _emailController.text.trim();
+                            final String password =
+                                _passwordController.text.trim();
+                            _registerUser(name, surname, email, password,
+                                _selectedSubject);
+                          },
+                          child: Text('Register'),
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-       ),
-      )
-    );
+          ),
+        ));
   }
 
-
-Future<void> _registerUser(String name, String surname, String email,
+  Future<void> _registerUser(String name, String surname, String email,
       String password, String selectedSubject) async {
     try {
       // Step 1: Register the user with Firebase Authentication
@@ -130,44 +135,37 @@ Future<void> _registerUser(String name, String surname, String email,
 
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
-        } catch (e) {
+    } catch (e) {
       print("Error: $e");
     }
   }
+
   AppBar appBar() {
     return AppBar(
       title: const Text(
         'Sign up',
         style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.bold
-        ),
+            color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
       ),
       backgroundColor: Colors.white,
       elevation: 0.0,
       centerTitle: true,
       leading: GestureDetector(
-        onTap: () {
-
-        },
-
+        onTap: () {},
       ),
       actions: [
         GestureDetector(
           onTap: () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
-          }
-          ,
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => LoginPage()));
+          },
           child: Container(
             margin: const EdgeInsets.all(10),
             alignment: Alignment.center,
             width: 37,
             decoration: BoxDecoration(
                 color: const Color(0xffF7F8F8),
-                borderRadius: BorderRadius.circular(10)
-            ),
+                borderRadius: BorderRadius.circular(10)),
             child: SvgPicture.asset(
               'assets/icons/dots.svg',
               height: 5,

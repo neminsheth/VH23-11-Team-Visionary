@@ -187,7 +187,7 @@ class _GroupPageState extends State<GroupPage> {
                               ),
                             ),
                             subtitle: Text(
-                              'Description or additional information about the group',
+                              'This is the bar for group chat ',
                               style: TextStyle(
                                 fontSize: 14, // Adjust the font size as needed
                                 color: Colors.grey,

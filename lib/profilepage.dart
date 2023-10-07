@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
@@ -117,4 +118,23 @@ class _ProfileViewState extends State<ProfileView> {
       ],
     );
   }
+}
+Future<Map<String, dynamic>> fetchCurrentUserDetails() async {
+  final user = FirebaseAuth.instance.currentUser;
+  final email = user?.email;
+
+  if (email != null) {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('Students')
+        .where('email', isEqualTo: email)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      final userData = querySnapshot.docs.first.data() as Map<String, dynamic>;
+      return userData;
+    }
+  }
+
+  // If user not found or error occurs, return an empty map or handle it as needed.
+  return {};
 }

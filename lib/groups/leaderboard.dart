@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:virtual_study_buddy/colors.dart';
+import 'package:virtual_study_buddy/general/styleCard.dart';
 import '../home.dart';
 
 class LeaderboardPage extends StatelessWidget {
@@ -19,24 +20,37 @@ class LeaderboardPage extends StatelessWidget {
           }
 
           var users = snapshot.data!.docs;
-          print(users);
 
-          // Sort users based on the sum of their scores
+          // Sort users based on the sum of their scores (descending order)
           users.sort((a, b) {
             int sumA = a['python'] + a['dbms'] + a['javascript'] + a['htmlCss'];
             int sumB = b['python'] + b['dbms'] + b['javascript'] + b['htmlCss'];
-            return sumA - sumB;
+            return sumB - sumA; // Sort in descending order
           });
 
           return ListView.builder(
             itemCount: users.length,
             itemBuilder: (context, index) {
               var user = users[index];
-              int totalScore = user['python'] + user['dbms'] + user['javascript'] + user['htmlCss'];
+              int totalScore = user['python'] +
+                  user['dbms'] +
+                  user['javascript'] +
+                  user['htmlCss'];
 
-              return ListTile(
-                title: Text(user['name']),
-                subtitle: Text('Total Score: $totalScore'),
+              return StyleCard(
+                title: user['name'],
+                description: 'Total Score: $totalScore',
+                img: "assets/icons/music.svg",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LeaderboardPage(),
+                    ),
+                  );
+                },
+                bgColor: AppColors.primary,
+                textColor: AppColors.white,
               );
             },
           );
@@ -44,6 +58,7 @@ class LeaderboardPage extends StatelessWidget {
       ),
     );
   }
+
   AppBar appBar() {
     return AppBar(
       leading: GestureDetector(
@@ -99,4 +114,3 @@ class LeaderboardPage extends StatelessWidget {
     );
   }
 }
-

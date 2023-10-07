@@ -81,13 +81,37 @@ class _ChatScreenAState extends State<ChatScreenA> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: Column(
+              body: Container(
+              decoration: BoxDecoration(
+              image: DecorationImage(
+              image: AssetImage('assets/icons/desktop-wallpaper-whatsapp-dark-whatsapp-chat.jpg'), // Replace with your background image asset
+              fit: BoxFit.cover,
+              ),
+              ),
+              child: Column(
         children: <Widget>[
+          SizedBox(height: 5,),
+          Row(
+            children: [
+              FloatingActionButton(
+                backgroundColor: Colors.white,
+                onPressed: () => _showEmails(context), // Pass the context
+                tooltip: 'Show Emails',
+                child: Icon(Icons.email,
+                  color: Colors.black,),
+              ),
+          SizedBox(width: 5),
+
           FloatingActionButton(
+            backgroundColor: Colors.white,
             onPressed: () => _showEmails(context), // Pass the context
-            tooltip: 'Show Emails',
-            child: Icon(Icons.email),
+            tooltip: 'Video Call',
+            child: Icon(Icons.video_call_outlined,
+              color: Colors.black,),
           ),
+            ],
+          ),
+
           Expanded(
             child: StreamBuilder(
               stream: _firestore
@@ -122,20 +146,29 @@ class _ChatScreenAState extends State<ChatScreenA> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.message),
+            leading: Icon(Icons.message,
+              color: Colors.white,),
             title: TextField(
               controller: _textController,
-              decoration: InputDecoration.collapsed(hintText: 'Send a message'),
+              decoration: InputDecoration.collapsed(
+                hintText: 'Send a message',
+                hintStyle: TextStyle(color: Colors.white), // Change the hint text color
+              ),
+              style: TextStyle(color: Colors.white), // Change the input text color
               onSubmitted: _handleSubmitted,
             ),
+
             trailing: IconButton(
-              icon: Icon(Icons.send),
+              icon: Icon(Icons.send,
+                color: Colors.white,),
               onPressed: () => _handleSubmitted(_textController.text),
             ),
           ),
         ],
       ),
+     )
     );
+
   }
 }
 
@@ -192,7 +225,7 @@ class MessageWidget extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         padding: EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: isCurrentUser ? AppColors.primary : AppColors.secondary,
+          color: isCurrentUser ? Colors.black12 : Colors.black12,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
@@ -211,7 +244,7 @@ class MessageWidget extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(30.0),
               ),
               child: Text(
                 text,
@@ -231,7 +264,7 @@ class MessageWidget extends StatelessWidget {
 Future<List<String>> getEmailsFromGroupChat() async {
   final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
       .collection('chatroom')
-      .doc('Advanced')
+      .doc('Beginner')
       .collection('messages')
       .get();
 

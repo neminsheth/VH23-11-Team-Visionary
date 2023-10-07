@@ -127,6 +127,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
             print(userEmail);
           });
         }
+
         String highestLabel = printHighestLabel(responseData);
         addUserToGroupChat(highestLabel, 'Welcome to the chat!', userEmail);
         // Use the returned label as needed
@@ -289,6 +290,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         data: requestData,
       );
       print(response);
+
     } on DioError catch (e) {
       print(e.response?.toString() ?? 'Error occurred');
     }
@@ -322,6 +324,56 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     } else {
       return 'Unknown'; // Handle other cases if necessary
     }
+  }
+
+
+  List<double> extractScores(String jsonStr) {
+    // Parse the JSON string
+    Map<String, dynamic> jsonData = json.decode(jsonStr);
+
+    // Extract scores list from the JSON
+    List<double> scores = List<double>.from(jsonData['predictions'][0]['scores']);
+
+    // Return the scores list
+    return scores;
+  }
+
+  void main() {
+    String jsonString = '{"predictions":[{"classes":["Advanced","Beginner","Intermediate"],"scores":[0.9919021129608154,0.001683753449469805,0.00641406886279583]}]}';
+
+    // Call the function and get the scores
+    List<double> scores = extractScores(jsonString);
+
+    // Print the scores
+    print('Scores: $scores');
+  }
+
+
+}
+class Prediction {
+  final List<String> classes;
+  final List<double> scores;
+
+  Prediction({required this.classes, required this.scores});
+
+  factory Prediction.fromJson(Map<String, dynamic> json) {
+    List<String> classes = List<String>.from(json['predictions'][0]['classes']);
+    List<double> scores = List<double>.from(json['predictions'][0]['scores']);
+    return Prediction(classes: classes, scores: scores);
+  }
+}
+
+class PredictionsResponse {
+  final List<Prediction> predictions;
+
+  PredictionsResponse({required this.predictions});
+
+  factory PredictionsResponse.fromJson(Map<String, dynamic> json) {
+    List<dynamic> predictionsJson = json['predictions'];
+    List<Prediction> predictions = predictionsJson
+        .map((predictionJson) => Prediction.fromJson(predictionJson))
+        .toList();
+    return PredictionsResponse(predictions: predictions);
   }
 }
 

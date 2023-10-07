@@ -6,6 +6,7 @@ import 'package:virtual_study_buddy/groups/readingbooks.dart';
 
 import '../colors.dart';
 import '../general/styleCard.dart';
+import '../predict.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -101,6 +102,7 @@ class ProfilePage extends StatelessWidget {
               title: "Notification",
               img: "assets/icons/notfication.svg",
               onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CareerPredictionPage()));
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,

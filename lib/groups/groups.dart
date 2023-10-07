@@ -8,8 +8,10 @@ import 'package:virtual_study_buddy/level/group_a.dart';
 import 'package:virtual_study_buddy/level/group_b.dart';
 import 'package:virtual_study_buddy/level/group_i.dart';
 import '../colors.dart';
+import '../general/styleCard.dart';
 import '../home.dart';
 import 'languages/language.dart';
+import 'leaderboard.dart';
 
 class GroupPage extends StatefulWidget {
   @override
@@ -83,174 +85,140 @@ class _GroupPageState extends State<GroupPage> {
     return Scaffold(
       appBar: appBar(),
       body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 300,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => QuestionnairePage(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.primary,
-                      padding: EdgeInsets.symmetric(
-                          horizontal:
-                              24), // Increase horizontal padding for width
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            40), // Adjust the border radius for roundness
-                      ),
-                    ),
-                    child: Text(
-                      'Join new group',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 300,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ReadingBooks(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.primary,
-                      padding: EdgeInsets.symmetric(
-                          horizontal:
-                              24), // Increase horizontal padding for width
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            40), // Adjust the border radius for roundness
-                      ),
-                    ),
-                    child: Text(
-                      'Books',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle leaderboard button tap
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          40), // Adjust the border radius for roundness
-                    ),
-                  ),
-                  child: Text('Leaderboard', style: TextStyle(fontSize: 18)),
-                ),
-                Container(
-                  width: 300, // Set the desired width here
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Handle streaks button tap
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            40), // Adjust the border radius for roundness
-                      ),
-                    ),
-                    child: Text('Streaks', style: TextStyle(fontSize: 18)),
-                  ),
-                ),
-                Container(
-                  width: 300,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    StyleCard(
+                      title: "Join new group",
+                      img: "assets/icons/happy.svg",
+                      onTap: () {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LanguagePage()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            40), // Adjust the border radius for roundness
-                      ), // Set the button color to AppColor.primary
+                            builder: (context) => QuestionnairePage(),
+                          ),
+                        );
+                      },
+                      bgColor: AppColors.primary,
+                      textColor: AppColors.white,
+                      description: "AI selected group!",
                     ),
-                    child: Text('Language', style: TextStyle(fontSize: 18)),
+                    StyleCard(
+                      title: "Books",
+                      img: "assets/icons/reading.svg",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReadingBooks(),
+                          ),
+                        );
+                      },
+                      bgColor: AppColors.primary,
+                      textColor: AppColors.white,
+                      description: "Subject-oriented books!",
+                    ),
+                    StyleCard(
+                      title: "Leaderboard",
+                      img: "assets/icons/music.svg",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LeaderboardPage(),
+                          ),
+                        );
+                      },
+                      bgColor: AppColors.primary,
+                      textColor: AppColors.white,
+                      description: "Find where you stand!",
+                    ),
+                    StyleCard(
+                      title: "Language",
+                      img: "assets/icons/language.svg",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LanguagePage(),
+                          ),
+                        );
+                      },
+                      bgColor: AppColors.primary,
+                      textColor: AppColors.white,
+                      description: "Learn and Code!",
+                    ),
+
+
+                  ],
+
+                ),
+
+              ),
+              //SizedBox(height: 10),
+              Text(
+                'Your Groups',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20,),
+              Expanded(
+                child: Container(
+                  height: 500,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: userGroups.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                          onTap: () =>
+                              _handleGroupTap(userGroups[index]), // Handle group tap
+                          child: ListTile(
+                            title: Text(
+                              userGroups[index],
+                              style: TextStyle(
+                                fontSize: 18, // Adjust the font size as needed
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              'Description or additional information about the group',
+                              style: TextStyle(
+                                fontSize: 14, // Adjust the font size as needed
+                                color: Colors.grey,
+                              ),
+                            ),
+                            leading: CircleAvatar(
+                              // You can use a group icon or image here
+                              backgroundColor:
+                                  Colors.black, // Customize the background color
+                              child: Icon(
+                                Icons
+                                    .group, // Customize with an appropriate group icon
+                                color: Colors.white, // Customize the icon color
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons
+                                  .arrow_forward_ios, // Add an arrow icon for navigation
+                              color: Colors.grey, // Customize the icon color
+                            ),
+                            onTap: () => _handleGroupTap(
+                                userGroups[index]), // Handle group tap
+                          ));
+                    },
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          SizedBox(height: 20),
-          Text(
-            'Your Groups',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: userGroups.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                    onTap: () =>
-                        _handleGroupTap(userGroups[index]), // Handle group tap
-                    child: ListTile(
-                      title: Text(
-                        userGroups[index],
-                        style: TextStyle(
-                          fontSize: 18, // Adjust the font size as needed
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(
-                        'Description or additional information about the group',
-                        style: TextStyle(
-                          fontSize: 14, // Adjust the font size as needed
-                          color: Colors.grey,
-                        ),
-                      ),
-                      leading: CircleAvatar(
-                        // You can use a group icon or image here
-                        backgroundColor:
-                            Colors.blue, // Customize the background color
-                        child: Icon(
-                          Icons
-                              .group, // Customize with an appropriate group icon
-                          color: Colors.white, // Customize the icon color
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons
-                            .arrow_forward_ios, // Add an arrow icon for navigation
-                        color: Colors.grey, // Customize the icon color
-                      ),
-                      onTap: () => _handleGroupTap(
-                          userGroups[index]), // Handle group tap
-                    ));
-              },
-            ),
-          ),
-        ],
-      ),
+
+
     );
   }
 
@@ -297,6 +265,7 @@ class GroupChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Group Chat: $groupId'), // Display the group name or ID

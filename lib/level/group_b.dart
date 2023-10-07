@@ -90,13 +90,26 @@ class _ChatScreenBState extends State<ChatScreenB> {
               ),
               child: Column(
         children: <Widget>[
+          Row(
+            children: [
+              FloatingActionButton(
+                backgroundColor: Colors.white,
+                onPressed: () => _showEmails(context), // Pass the context
+                tooltip: 'Show Emails',
+                child: Icon(Icons.email,
+                  color: Colors.black,),
+              ),
+
           FloatingActionButton(
             backgroundColor: Colors.white,
             onPressed: () => _showEmails(context), // Pass the context
-            tooltip: 'Show Emails',
-            child: Icon(Icons.email,
+            tooltip: 'Video Call',
+            child: Icon(Icons.video_call_outlined,
               color: Colors.black,),
           ),
+            ],
+          ),
+
           Expanded(
             child: StreamBuilder(
               stream: _firestore

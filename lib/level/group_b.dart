@@ -90,6 +90,7 @@ class _ChatScreenBState extends State<ChatScreenB> {
               ),
               child: Column(
         children: <Widget>[
+          SizedBox(height: 5,),
           Row(
             children: [
               FloatingActionButton(
@@ -99,6 +100,7 @@ class _ChatScreenBState extends State<ChatScreenB> {
                 child: Icon(Icons.email,
                   color: Colors.black,),
               ),
+          SizedBox(width: 5),
 
           FloatingActionButton(
             backgroundColor: Colors.white,

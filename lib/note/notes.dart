@@ -225,7 +225,7 @@ class _NotesScreenState extends State<NotesScreen> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.primary, width: 2),
+                        border: Border.all(color: AppColors.primary, width: 1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: ListTile(
@@ -377,7 +377,7 @@ class _NotesScreenState extends State<NotesScreen> {
             ),
             decoration: BoxDecoration(
               color: const Color(0xffF7F8F8),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
             ),
           ),
         ),

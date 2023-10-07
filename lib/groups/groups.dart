@@ -170,7 +170,7 @@ class _GroupPageState extends State<GroupPage> {
               SizedBox(height: 20,),
               Expanded(
                 child: Container(
-                  height: 500,
+                  height: 510,
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: userGroups.length,

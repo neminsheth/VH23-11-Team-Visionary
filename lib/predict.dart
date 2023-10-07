@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:virtual_study_buddy/colors.dart';
+import 'package:virtual_study_buddy/profile/profile.dart';
+import 'package:virtual_study_buddy/profile/profilepage.dart';
 
 class CareerPredictionPage extends StatefulWidget {
   @override
@@ -64,19 +68,30 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Career Predictor'),
-      ),
+      appBar: appBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            ElevatedButton(
-              onPressed: predictCareerFromFirebase,
-              child: Text('Predict Career from Firebase Data'),
+            Container(
+              height: 50,
+              width: 500,
+              child: ElevatedButton(
+                onPressed: predictCareerFromFirebase,
+                child: Text('Predict Career from Firebase Data',
+                style: TextStyle(
+                  color: AppColors.black
+                ),),
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.secondary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30), // Set button border radius
+                  ),// Set the button color to blue
+                ),
+              ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
             Text(
               'Predicted Career: $prediction',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -84,6 +99,60 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
           ],
         ),
       ),
+    );
+  }
+  AppBar appBar() {
+    return AppBar(
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ProfilePage()));
+        },
+        child: Container(
+          margin: const EdgeInsets.all(10),
+          alignment: Alignment.center,
+          width: 37,
+          child: SvgPicture.asset(
+            'assets/icons/Arrow - Left 2.svg',
+            height: 25,
+            width: 25,
+          ),
+          decoration: BoxDecoration(
+            color: const Color(0xffF7F8F8),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      title: const Text(
+        'Career guidance!',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      centerTitle: true,
+      actions: [
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            alignment: Alignment.center,
+            width: 37,
+            child: SvgPicture.asset(
+              'assets/icons/dots.svg',
+              height: 5,
+              width: 5,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xffF7F8F8),
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

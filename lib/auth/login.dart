@@ -50,59 +50,70 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         child: Center(
-
           child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  width: 350,
-                  padding: EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.white, width: 2.0),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 350,
+                      padding: EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0),
+                        border: Border.all(color: Colors.white, width: 2.0),
                       ),
-                      SizedBox(height: 20.0),
-                      TextField(
-                        controller: _passwordController,
-                        obscureText: true, // Hide password
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                      child: Column(
+                        children: <Widget>[
+                          TextField(
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(height: 20.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          final String email = _emailController.text.trim();
-                          final String password = _passwordController.text.trim();
-                          _signInWithEmailAndPassword(email, password);
-                        },
-                        child: Text('Login'),
-                        style: ElevatedButton.styleFrom(
-                          primary: AppColors.secondary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
+                          SizedBox(height: 20.0),
+                          TextField(
+                            controller: _passwordController,
+                            obscureText: true, // Hide password
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
                           ),
-                        ),
+                          SizedBox(height: 20.0),
+                          ElevatedButton(
+                            onPressed: () {
+                              final String email = _emailController.text.trim();
+                              final String password = _passwordController.text.trim();
+                              _signInWithEmailAndPassword(email, password);
+                            },
+                            child: Text('Login'),
+                            style: ElevatedButton.styleFrom(
+                              primary: AppColors.secondary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Positioned(
+                      top: -50,
+                      child: Image.asset(
+                        'assets/icon-removebg-preview.png', // Replace with your image asset
+                        height: 100, // Adjust the height as needed
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 10.0), // Add spacing
                 TextButton(

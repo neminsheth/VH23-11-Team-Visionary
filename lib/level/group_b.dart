@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:virtual_study_buddy/colors.dart';
 import 'package:virtual_study_buddy/auth/login.dart';
 
@@ -25,6 +26,14 @@ class _ChatScreenBState extends State<ChatScreenB> {
       setState(() {
         userEmail = user.email!;
       });
+    }
+  }
+  void _launchGoogleMeet() async {
+    const url = 'https://meet.google.com/';
+    try {
+      await launch(url); // Launch the provided URL
+    } catch (e) {
+      print('Error launching URL: $e');
     }
   }
 

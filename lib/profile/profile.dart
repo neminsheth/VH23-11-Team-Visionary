@@ -105,7 +105,7 @@ class ProfilePage extends StatelessWidget {
 
             StyleCard(
               title: "Predict",
-              img: "assets/icons/profile.svg",
+              img: "assets/icons/predictt.svg",
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => CareerPredictionPage()));
               },

@@ -14,6 +14,16 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
   String prediction = '';
   String imagePath = ''; // Empty path initially
 
+  // Dummy list of professors with generic names and icons
+  List<Map<String, dynamic>> professorsList = [
+    {"name": "Nemin Sheth", "icon": Icons.school},
+    {"name": "Dhruv Joshi", "icon": Icons.school},
+    {"name": "Abey Geoge", "icon": Icons.school},
+    {"name": "Anuj Bohra", "icon": Icons.school},
+
+    // Add more professors as needed
+  ];
+
   Future<void> predictCareerFromFirebase() async {
     // Retrieve data from the Firebase collection "Students"
     final QuerySnapshot<Map<String, dynamic>> studentsSnapshot =
@@ -117,6 +127,22 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
                 height: 300, // Set height as per your requirement
                 fit: BoxFit.contain,
               ),
+              SizedBox(height: 20),
+              Text(
+                'Professors:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              // Display the list of professors
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: professorsList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Icon(professorsList[index]['icon']), // Icon for each professor
+                    title: Text(professorsList[index]['name']), // Professor name
+                  );
+                },
+              ),
             ],
           ],
         ),
@@ -179,3 +205,5 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
     );
   }
 }
+
+

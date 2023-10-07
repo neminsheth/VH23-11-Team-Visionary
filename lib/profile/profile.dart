@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_study_buddy/auth/login.dart';
@@ -7,6 +9,8 @@ import 'package:virtual_study_buddy/groups/readingbooks.dart';
 import '../colors.dart';
 import '../general/styleCard.dart';
 import '../predict.dart';
+import 'helpcentre.dart';
+import 'notification.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -116,7 +120,7 @@ class ProfilePage extends StatelessWidget {
               title: "Notification",
               img: "assets/icons/notfication.svg",
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CareerPredictionPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
@@ -140,7 +144,7 @@ class ProfilePage extends StatelessWidget {
             StyleCard(
               title: "Help Centre",
               img: "assets/icons/question.svg",
-              onTap: () {
+              onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => HelpCentrePage()));
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
@@ -162,18 +166,35 @@ class ProfilePage extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            StyleCard(
-              title: "Delete Account",
-              img: "assets/icons/delete.svg",
-              onTap: () {
-              },
-              bgColor: AppColors.primary,
-              textColor: AppColors.white,
-              description: ":(",
-            ),
-            SizedBox(
-              height: 15,
-            ),
+      StyleCard(
+        title: "Delete Account",
+        img: "assets/icons/delete.svg",
+        onTap: () async {
+          // Get the current user
+          User? user = FirebaseAuth.instance.currentUser;
+
+          if (user != null) {
+            // Delete user from Firebase Authentication
+            try {
+              await user.delete();
+
+              // Delete user data from Firestore (assuming 'Students' is the collection name)
+              await FirebaseFirestore.instance.collection('Students').doc(user.uid).delete();
+
+              // Navigate to the home screen or any other screen after successful deletion
+              Navigator.of(context).pushReplacementNamed('/home');
+            } catch (e) {
+              // Handle errors, e.g., display an error message to the user
+              print("Error deleting account: $e");
+            }
+          }
+        },
+        bgColor: AppColors.primary,
+        textColor: AppColors.white,
+        description: ":(",
+      ),
+
+
 
           ],
         ),

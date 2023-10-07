@@ -121,11 +121,10 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
             userEmail = user.email!;
           });
         }
-        addUserToGroupChat(highestLabel, '', userEmail);
+        addUserToGroupChat(givePred(selectedAnswers), '', userEmail);
 
         // Use the returned label as needed
-        print(
-            'Highest Label: $highestLabel'); // Output: Highest Label: Advanced
+        print(givePred(selectedAnswers)); // Output: Highest Label: Advanced
 
         // Use the returned label as needed
         //print('Highest Label: $highestLabel');
@@ -241,7 +240,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   Future<void> predict() async {
     final Dio dio = Dio(BaseOptions(headers: {
       'Authorization':
-          'Bearer ya29.a0AfB_byBr-B-SoGIGl36OhrRH4gFmWQdXwxOCI4wGPKOx_1nOx4x7Qc8p2GrOoQj4awmI0TkGcAWS6C-cTWbLG-MxZf5PHj1CI-zTcFhIr6ZkW7MVz9O-cJQsCuAySKq9IMaruYtbaXR2k07MTB3vgSEl-wLhnZruxrmpFoQKomYF5VKvwukdDnVn-3_8tbb2hq5xOX0c02f12WhurKckb15Kh3F2w9yjInKxEYDHHMpJlOC5eRdoEBi4U7-LbzWVysT00V1ltT2NBlxbLTX_outyfGyXQ85HXrPbAh9h4O-pNdZ96OKvev9jzIep-d4cdH347-Cp_UqRBMohBYjojH6qQzQvx-5pKYTN3JtgOvKwNXnoImUcrIP5RljcXV6GfKgUJ03nzCWST-eC0sQtEXWWfazZNKtZaCgYKAQcSARESFQGOcNnCt3MEcu6BFZYTWIuo4VYD3A0423',
+          'Bearer ya29.a0AfB_byAPHzJNDMXOsZD3PczHfR4Id1H0Mjp-589HJjDl2zZ7-wkXDRh5J7GWw3pYUNMEdxI682OPDklArURMX0ALPt6Z6jqn9VlnpoyS7FIOZZ6Xbk21xZQx481AhLkiYUblvDgdyxzne5UZWfB1bHiSQeOpfPxxvUqX7XSK4OjUGu0uQOU4DeCh9caWi8m1XdYEHzKP9H9pM2cXqO7I5Simbb_0RNEwlp80lj7E2M8NN84vaCRuEeL5iiWfTwtx6Y4aguQlzglMTX6LenZupkmSZ_c4Tf4PqS3jG6RVbZLba3xAXr8jf_f3SThkLecNjD6CDJerogChBZcDD1KKjO0RVZykpv93gEQn0wuwG6zc7EyLhrnoLWOpG1-XroUBa09KgACjV8-KMJkvn6ik95jGPmv_tPAaCgYKAY0SARESFQGOcNnC4wyJevPD8g7NgkMHYVVaTg0422',
     }));
 
     // Create a map to store the question keys and their corresponding user answers
@@ -269,7 +268,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
 
     try {
       final response = await dio.post(
-        'https://us-central1-aiplatform.googleapis.com/v1/projects/218438994727/locations/us-central1/endpoints/6617215018700111872:predict',
+        'https://us-central1-aiplatform.googleapis.com/v1/projects/218438994727/locations/us-central1/endpoints/626864564343930880:predict',
         options: Options(headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
         }),
@@ -312,6 +311,37 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       return 'Unknown'; // Handle other cases if necessary
     }
   }
+}
+
+String givePred(List<String?> selectedAnswers) {
+  if ((selectedAnswers[6] == 1 || selectedAnswers[6] == 2) &&
+      (selectedAnswers[7] == 1 ||
+          selectedAnswers[7] == 2 ||
+          selectedAnswers[7] == 3) &&
+      (selectedAnswers[8] == 'No') &&
+      (selectedAnswers[10] == 1 || selectedAnswers[10] == 2) &&
+      (selectedAnswers[12] == 1 || selectedAnswers[20] == 2))
+    return 'Begineer';
+  else if ((selectedAnswers[6] == 3 ||
+          selectedAnswers[6] == 4 ||
+          selectedAnswers[6] == 5 ||
+          selectedAnswers[6] == 6) &&
+      (selectedAnswers[7] == 3 ||
+          selectedAnswers[7] == 4 ||
+          selectedAnswers[7] == 5 ||
+          selectedAnswers[7] == 6) &&
+      (selectedAnswers[8] == 'No' || selectedAnswers[8] == 'Yes') &&
+      (selectedAnswers[10] == 3 ||
+          selectedAnswers[10] == 4 ||
+          selectedAnswers[10] == 5 ||
+          selectedAnswers[10] == 6) &&
+      (selectedAnswers[12] == 3 ||
+          selectedAnswers[12] == 4 ||
+          selectedAnswers[12] == 5 ||
+          selectedAnswers[12] == 6))
+    return 'Intermedite';
+  else
+    return 'Advanced';
 }
 //{"predictions":[{"classes":["Advanced","Beginner","Intermediate"],"scores":[0.9919021129608154,0.001683753449469805,0.00641406886279583]}],
 //[No, No, Yes, NLP, Neutral, 4, 2, TextBook, 3, 1, Verbal, Enjoy Communicating, 8]

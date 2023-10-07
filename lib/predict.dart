@@ -113,8 +113,8 @@ class _CareerPredictionPageState extends State<CareerPredictionPage> {
               SizedBox(height: 20),
               Image.asset(
                 imagePath,
-                width: 200,
-                height: 200,
+                width: 300, // Set width as per your requirement
+                height: 300, // Set height as per your requirement
                 fit: BoxFit.contain,
               ),
             ],

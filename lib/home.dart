@@ -16,9 +16,9 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
+    GroupPage(),
     FeedPage(),
     NotesScreen(),
-    GroupPage(),
     ProfilePage(),
   ];
 
@@ -43,16 +43,16 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColors.secondary, // Set background color
         items: [
           FlashyTabBarItem(
+            icon: Icon(Icons.groups, color: AppColors.white),
+            title: Text('Groups', style: TextStyle(color: AppColors.white)),
+          ),
+          FlashyTabBarItem(
             icon: Icon(Icons.home, color: AppColors.white),
             title: Text('Feed', style: TextStyle(color: AppColors.white)),
             ),
           FlashyTabBarItem(
             icon: Icon(Icons.emoji_emotions, color: AppColors.white),
             title: Text('Notes', style: TextStyle(color: AppColors.white)),
-          ),
-          FlashyTabBarItem(
-            icon: Icon(Icons.groups, color: AppColors.white),
-            title: Text('Groups', style: TextStyle(color: AppColors.white)),
           ),
           FlashyTabBarItem(
             icon: Icon(Icons.more_horiz, color: AppColors.white),

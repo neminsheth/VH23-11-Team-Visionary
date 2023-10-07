@@ -44,7 +44,6 @@ class _ChatScreenAState extends State<ChatScreenA> {
 
       // Add the new message to the collection
       await chatRoomMessageCollection.add(messageData);
-      
 
       _textController.clear();
     }
@@ -306,4 +305,3 @@ Future<void> addUserToGroupChat(
     // Handle any errors here
   }
 }
-

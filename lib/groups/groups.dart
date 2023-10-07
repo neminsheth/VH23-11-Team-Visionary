@@ -89,82 +89,110 @@ class _GroupPageState extends State<GroupPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-
+                Container(
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QuestionnairePage(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.primary,
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              24), // Increase horizontal padding for width
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            40), // Adjust the border radius for roundness
+                      ),
+                    ),
+                    child: Text(
+                      'Join new group',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReadingBooks(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.primary,
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              24), // Increase horizontal padding for width
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            40), // Adjust the border radius for roundness
+                      ),
+                    ),
+                    child: Text(
+                      'Books',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => QuestionnairePage(),
-                      ),
-                    );
+                    // Handle leaderboard button tap
                   },
                   style: ElevatedButton.styleFrom(
                     primary: AppColors.primary,
-                    padding: EdgeInsets.symmetric(horizontal: 24), // Increase horizontal padding for width
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40), // Adjust the border radius for roundness
+                      borderRadius: BorderRadius.circular(
+                          40), // Adjust the border radius for roundness
                     ),
                   ),
-                  child: Text(
-                    'Join new group',
-                    style: TextStyle(fontSize: 18),
-                  ),
+                  child: Text('Leaderboard', style: TextStyle(fontSize: 18)),
                 ),
-
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ReadingBooks(),
+                Container(
+                  width: 300, // Set the desired width here
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle streaks button tap
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            40), // Adjust the border radius for roundness
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.primary,
-                    padding: EdgeInsets.symmetric(horizontal: 24), // Increase horizontal padding for width
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40), // Adjust the border radius for roundness
                     ),
-                  ),
-                  child: Text(
-                    'Books',
-                    style: TextStyle(fontSize: 18),
+                    child: Text('Streaks', style: TextStyle(fontSize: 18)),
                   ),
                 ),
-
-                ElevatedButton(
-                onPressed: () {
-                  // Handle leaderboard button tap
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary,
+                Container(
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LanguagePage()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            40), // Adjust the border radius for roundness
+                      ), // Set the button color to AppColor.primary
+                    ),
+                    child: Text('Language', style: TextStyle(fontSize: 18)),
+                  ),
                 ),
-                child: Text('Leaderboard', style: TextStyle(fontSize: 18)),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Handle streaks button tap
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary,
-                ),
-                child: Text('Streaks', style: TextStyle(fontSize: 18)),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => LanguagePage()));
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary, // Set the button color to AppColor.primary
-                ),
-                child: Text('Language', style: TextStyle(fontSize: 18)),
-              ),
-            ],
+              ],
             ),
-
           ),
           SizedBox(height: 20),
           Text(
@@ -175,7 +203,9 @@ class _GroupPageState extends State<GroupPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: userGroups.length,
@@ -267,7 +297,6 @@ class GroupChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Group Chat: $groupId'), // Display the group name or ID

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:virtual_study_buddy/groups/groups.dart';
 import 'package:virtual_study_buddy/level/group_a.dart';
 import 'package:virtual_study_buddy/auth/login.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Firebase App',
-      home: SplashScreen(),
+      home: LoginPage(),
     );
   }
 }

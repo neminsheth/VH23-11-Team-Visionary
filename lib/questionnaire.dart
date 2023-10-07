@@ -117,10 +117,10 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         String highestLabel = printHighestLabel(responseData);
         final user = FirebaseAuth.instance.currentUser;
         if (user != null) {
-      setState(() {
-        userEmail = user.email!;
-      });
-    }
+          setState(() {
+            userEmail = user.email!;
+          });
+        }
         addUserToGroupChat(highestLabel, '', userEmail);
 
         // Use the returned label as needed
@@ -275,7 +275,8 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         }),
         data: requestData,
       );
-      print(response);
+      print('this is a testt message');
+      print(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       print(e.response?.toString() ?? 'Error occurred');
     }

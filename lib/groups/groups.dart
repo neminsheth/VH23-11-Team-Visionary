@@ -86,41 +86,55 @@ class _GroupPageState extends State<GroupPage> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => QuestionnairePage()),
+                        builder: (context) => QuestionnairePage(),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     primary: AppColors.primary,
+                    padding: EdgeInsets.symmetric(horizontal: 24), // Increase horizontal padding for width
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40), // Adjust the border radius for roundness
+                    ),
                   ),
-                  child: Text('Join new group', style: TextStyle(fontSize: 18)),
+                  child: Text(
+                    'Join new group',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
+
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ReadingBooks()),
+                      MaterialPageRoute(
+                        builder: (context) => ReadingBooks(),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     primary: AppColors.primary,
+                    padding: EdgeInsets.symmetric(horizontal: 24), // Increase horizontal padding for width
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40), // Adjust the border radius for roundness
+                    ),
                   ),
-                  child: Text('Books', style: TextStyle(fontSize: 18)),
+                  child: Text(
+                    'Books',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
+
+                ElevatedButton(
                 onPressed: () {
                   // Handle leaderboard button tap
                 },
@@ -149,6 +163,8 @@ class _GroupPageState extends State<GroupPage> {
                 child: Text('Language', style: TextStyle(fontSize: 18)),
               ),
             ],
+            ),
+
           ),
           SizedBox(height: 20),
           Text(

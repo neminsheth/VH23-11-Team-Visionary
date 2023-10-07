@@ -4,6 +4,8 @@ import 'package:virtual_study_buddy/colors.dart';
 import 'package:virtual_study_buddy/dashboard/pomodoro.dart';
 import 'package:virtual_study_buddy/groups/readingbooks.dart';
 import 'package:virtual_study_buddy/dashboard/studymusic.dart';
+import 'package:virtual_study_buddy/note/note_details.dart';
+import 'package:virtual_study_buddy/note/notes.dart';
 
 
 import '../models/category_model.dart';
@@ -197,7 +199,9 @@ class FeedPage extends StatelessWidget {
                           ],
                         ),
                         GestureDetector(
-                          onTap: (){},
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => NotesScreen()));
+                          },
                           child: SvgPicture.asset(
                             'assets/icons/button.svg',
                             width: 30,
